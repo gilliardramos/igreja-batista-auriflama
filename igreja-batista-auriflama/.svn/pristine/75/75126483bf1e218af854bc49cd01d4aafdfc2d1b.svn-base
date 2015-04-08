@@ -1,0 +1,24 @@
+package com.toledo.salao.cliente;
+
+import java.util.List;
+
+public interface ClienteDao {
+
+	public void salvar(Cliente cliente);
+
+	public List<Cliente> listar();
+
+	public void excluir(Cliente cliente);
+
+	public Cliente pesquisar(String string);
+	
+	public Cliente pesquisarPorEmail(String string);
+
+	public void alterar(Cliente cliente);
+	
+	public Cliente carregar(Integer idCliente);
+	
+	public Cliente pesquisarPorEmailCriteria(String string);
+	
+
+}

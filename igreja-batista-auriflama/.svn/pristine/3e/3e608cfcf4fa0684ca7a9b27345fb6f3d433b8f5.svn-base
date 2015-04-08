@@ -1,0 +1,104 @@
+package com.toledo.salao.agenda;
+
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+import com.toledo.salao.funcionario.Funcionario;
+import com.toledo.salao.funcionario.FuncionarioRN;
+
+@ManagedBean(name = "agendaBean")
+@RequestScoped
+public class AgendaBean {
+	
+	private Agenda agendaSelecionada = new Agenda();
+	private List<Agenda> lista = null;
+	private List<Funcionario> listaFuncionario = null;
+	
+	
+	public List<Funcionario> getListaFuncionario() {
+		return listaFuncionario;
+	}
+
+	public void setListaFuncionario(List<Funcionario> listaFuncionario) {
+		this.listaFuncionario = listaFuncionario;
+	}
+
+	public Agenda getAgendaSelecionada() {
+		return agendaSelecionada;
+	}
+
+	public void setAgendaSelecionada(Agenda agendaSelecionada) {
+		this.agendaSelecionada = agendaSelecionada;
+	}
+
+	public List<Agenda> getLista() {
+		AgendaRN agendaRN = new AgendaRN();
+		if (lista == null) {
+			lista = agendaRN.listar();
+
+		}
+		return lista;
+	}
+
+	public void setLista(List<Agenda> lista) {
+		this.lista = lista;
+	}
+	
+	public void salvar() {
+		
+		if (this.agendaSelecionada.getId_agenda() == 0) {
+			//this.agendaSelecionada.setDataCadastro(new Date());
+			AgendaRN agendaRN = new AgendaRN();
+			agendaRN.salvar(this.agendaSelecionada);
+			FacesMessage faces = new FacesMessage("Agendamento cadastrada com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+		//	this.listaAgenda = null;
+			this.setAgendaSelecionada(null);
+
+		} else {
+			alterar();
+		}
+	}
+	
+
+
+	public void excluir() {
+		AgendaRN agendaRN = new AgendaRN();
+		agendaRN.excluir(this.agendaSelecionada);
+		FacesMessage faces = new FacesMessage("Agendamento excluido com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		//this.listaAgenda = null;
+		this.setAgendaSelecionada(null);
+	}
+	
+	public void alterar() {
+		//this.agendaSelecionada.setDataCadastro(new Date());
+		AgendaRN agendaRN = new AgendaRN();
+		agendaRN.alterar(this.agendaSelecionada);
+		FacesMessage faces = new FacesMessage("Agendamento Alterado com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		//this.listaEstado = null;
+		this.setAgendaSelecionada(null);	
+	}
+	
+	
+	public void listarFuncPorServico(){
+		FuncionarioRN funcionarioRN = new FuncionarioRN();
+		this.setListaFuncionario(funcionarioRN.listarPorServico(this.agendaSelecionada.getServico()));
+		
+	}
+	
+	
+	
+}
+

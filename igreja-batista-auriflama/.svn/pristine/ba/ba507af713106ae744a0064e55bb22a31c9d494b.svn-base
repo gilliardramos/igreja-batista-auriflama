@@ -1,0 +1,49 @@
+package com.toledo.salao.pessoa;
+
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+
+
+public class PessoaRN {
+
+	private PessoaDao pessoaDao;
+
+	public PessoaRN() {
+		this.pessoaDao = DAOFactory.criaPessoaDao();
+	}
+
+	public void salvar(Pessoa e1) {
+		this.pessoaDao.salvar(e1);
+		
+	}
+
+	public List<Pessoa> listar() {
+		return this.pessoaDao.listar();
+	}
+
+	public void excluir(Pessoa pessoa) {
+		this.pessoaDao.excluir(pessoa);
+		
+	}
+
+	public Pessoa pesquisar(String string) {
+		return this.pessoaDao.pesquisar(string);
+	}
+
+	public Pessoa buscarPorId(Integer id) {
+		return this.pessoaDao.buscarPorId(id);
+	}
+	
+	public void alterar(Pessoa pessoa) {
+	 this.pessoaDao.alterar(pessoa);
+		
+	}	
+	
+	public Pessoa carregar(Integer id) {
+		return this.pessoaDao.carregar(id);
+	}
+	}
+

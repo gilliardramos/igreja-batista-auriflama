@@ -1,0 +1,70 @@
+package com.toledo.salao.fechamento;
+
+import java.util.Date;
+import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+@ManagedBean(name = "fechamentoBean")
+@RequestScoped
+public class FechamentoBean {
+
+	private Fechamento fechamentoSelecionado = new Fechamento();
+	private List<Fechamento> lista = null;
+
+	public void salvar() {
+		if (this.fechamentoSelecionado.getId_fechamento() == 0) {
+			FechamentoRN fechamentoRN = new FechamentoRN();
+			fechamentoSelecionado.setDataCadastro(new Date());
+			fechamentoRN.salvar(fechamentoSelecionado);
+			FacesMessage faces = new FacesMessage(
+					"Fechamento cadastrado com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+			this.setFechamentoSelecionado(null);
+		} else {
+			alterar();
+		}
+	}
+
+	public Fechamento getFechamentoSelecionado() {
+		return fechamentoSelecionado;
+	}
+
+	public void setFechamentoSelecionado(Fechamento fechamentoSelecionado) {
+		this.fechamentoSelecionado = fechamentoSelecionado;
+	}
+
+	public List<Fechamento> getLista() {
+		FechamentoRN fechamentoRN = new FechamentoRN();
+		if (lista == null) {
+			lista = fechamentoRN.listar();
+
+		}
+		return lista;
+	}
+
+	public void excluir() {
+		FechamentoRN fechamentoRN = new FechamentoRN();
+		fechamentoRN.excluir(this.fechamentoSelecionado);
+		FacesMessage faces = new FacesMessage("Fechamento Excluido com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setFechamentoSelecionado(null);
+	}
+
+	public void alterar() {
+		FechamentoRN fechamentoRN = new FechamentoRN();
+		fechamentoRN.alterar(this.fechamentoSelecionado);
+		FacesMessage faces = new FacesMessage("Fechamento Alterado com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setFechamentoSelecionado(null);
+	}
+}
+

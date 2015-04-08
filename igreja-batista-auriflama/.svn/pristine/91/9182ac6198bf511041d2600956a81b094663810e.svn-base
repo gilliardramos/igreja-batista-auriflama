@@ -1,0 +1,141 @@
+package com.toledo.salao.endereco;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.FetchMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+
+
+public class EnderecoDaoHibernate implements EnderecoDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Endereco endereco) {
+		this.sessao.save(endereco);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	//###o metodo abaixo só vai ter utilidade caso queira listar endereços por cidade
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Endereco> listar() {
+		List<Endereco> enderecos = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			enderecos = (ArrayList<Endereco>)sessao
+				.createCriteria(Endereco.class)
+					.setFetchMode("cidade", FetchMode.JOIN)
+				    //.setFetchMode("pessoa", FetchMode.JOIN)
+				.list();
+			
+			
+			//teste:
+			
+			
+			
+			/*
+			 * Exemplo de Criteria para obter a endereco ja com o objeto esta a que pertence, 
+			 * mas trazendo somente a endereco do id_endereco = 123, ou o que vc's passar por parametro
+			 */
+			/*enderecos = (ArrayList<Endereco>)sessao.createCriteria(Endereco.class)
+					.setFetchMode("estado", FetchMode.JOIN)
+					.add(Restrictions.eq("id_endereco", 123))
+					.list();*/
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as enderecos cadastradas. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return enderecos;
+	}
+
+	@Override
+	public void excluir(Endereco endereco) {
+		this.sessao.delete(endereco);
+		
+	}
+
+	@Override
+	public Endereco pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from endereco c where c.nome_endereco like :nome_endereco");
+		consultaNome.setString("nome_endereco", "%" + string + "%");
+		return (Endereco) consultaNome.uniqueResult();
+	}
+
+	
+	@Override
+	public Endereco pesquisarPorPessoa(Integer idpessoa){
+		return (Endereco) this.sessao.get(Endereco.class, idpessoa);
+	}
+	
+	@Override
+	public void alterar(Endereco endereco) {
+		this.sessao.update(endereco);
+	}
+	
+	
+@Override
+public Endereco carregar(Integer idendereco){
+	return (Endereco) this.sessao.get(Endereco.class, idendereco);
+}
+
+//###o metodo abaixo só vai ter utilidade caso queira listar endereços por cidade
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Endereco> listarPorPessoa(Integer idpessoa) {
+		List<Endereco> enderecos = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			enderecos = (ArrayList<Endereco>)sessao
+				.createCriteria(Endereco.class)
+				//.setFetchMode("pessoa", FetchMode.JOIN)
+				 //.add(Restrictions.eq("id_pessoa", idpessoa))
+				.add(Restrictions.eq("pessoa.id_pessoa", idpessoa))
+					//.setFetchMode("cidade", FetchMode.JOIN)
+				    //.setFetchMode("pessoa", FetchMode.JOIN)
+				.list();
+			
+			
+			//teste:
+			
+			
+			
+			/*
+			 * Exemplo de Criteria para obter a endereco ja com o objeto esta a que pertence, 
+			 * mas trazendo somente a endereco do id_endereco = 123, ou o que vc's passar por parametro
+			 */
+//			enderecos = (ArrayList<Endereco>)sessao.createCriteria(Endereco.class)
+//					//.setFetchMode("pessoa", FetchMode.JOIN)
+//					.add(Restrictions.idEq(idpessoa)
+//					.list();
+//			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as enderecos cadastradas. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return enderecos;
+	}
+
+
+
+}

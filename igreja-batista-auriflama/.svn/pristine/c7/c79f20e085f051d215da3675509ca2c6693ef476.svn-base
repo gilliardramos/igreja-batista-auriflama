@@ -1,0 +1,46 @@
+package com.toledo.salao.agenda;
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+
+
+public class AgendaRN {
+
+	private AgendaDao agendaDao;
+
+	public AgendaRN() {
+		this.agendaDao = DAOFactory.criaAgendaDao();
+	}
+
+	public void salvar(Agenda e1) {
+		this.agendaDao.salvar(e1);
+		
+	}
+
+	public List<Agenda> listar() {
+		return this.agendaDao.listar();
+	}
+
+	public void excluir(Agenda agenda) {
+		this.agendaDao.excluir(agenda);
+		
+	}
+
+	public Agenda pesquisar(String string) {
+		return this.agendaDao.pesquisar(string);
+	}
+	
+	public List<Agenda> pesquisarPorPessoa(Integer idPessoa) {
+		return this.agendaDao.pesquisarPorPessoa(idPessoa);
+	}
+
+	public void alterar(Agenda agenda) {
+	 this.agendaDao.alterar(agenda);
+		
+	}	
+	
+	}
+
+

@@ -1,0 +1,24 @@
+package com.toledo.salao.fechamento;
+
+import java.util.List;
+
+import com.toledo.salao.fechamento.Fechamento;
+
+public interface FechamentoDao {
+
+	public void salvar(Fechamento fechamento);
+
+	public List<Fechamento> listar();
+
+	public void excluir(Fechamento fechamento);
+
+	public Fechamento pesquisar(String string);
+
+	public void alterar(Fechamento fechamento);
+
+	public Fechamento buscarPorId(Integer integer);
+	
+	public Fechamento carregar(Integer idFechamento);
+
+
+}

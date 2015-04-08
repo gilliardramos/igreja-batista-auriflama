@@ -1,0 +1,37 @@
+package com.toledo.salao.converter;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
+
+import com.toledo.salao.funcao.Funcao;
+import com.toledo.salao.funcao.FuncaoRN;
+
+@FacesConverter(value = "converterFuncao") // q q coisa mudar pra forvalue
+public class FuncaoConverter implements Converter {
+
+	@Override
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		if (value != null && value.trim().length() > 0) {
+			Integer codigo = Integer.valueOf(value);
+			try {
+				FuncaoRN funcaoRN = new FuncaoRN();
+				return funcaoRN.carregar(codigo);
+			} catch (Exception e) {
+				throw new ConverterException("Não foi possível encontrar o funcao de código " + value + "." + e.getMessage());
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		if (value != null) {
+			Funcao funcao = (Funcao) value;
+			return funcao.getId_funcao().toString();
+		}
+		return "";
+	}
+}

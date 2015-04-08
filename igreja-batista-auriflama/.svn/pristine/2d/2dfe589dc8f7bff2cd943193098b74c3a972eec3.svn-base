@@ -1,0 +1,78 @@
+package com.toledo.salao.fechamento;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+
+
+
+public class FechamentoDaoHibernate implements FechamentoDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Fechamento fechamento) {
+		this.sessao.save(fechamento);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Fechamento> listar() {
+		Criteria lista = sessao.createCriteria(Fechamento.class);
+		return lista.list();
+	}
+
+	@Override
+	public void excluir(Fechamento fechamento) {
+		this.sessao.delete(fechamento);
+
+	}
+
+
+	@Override
+	public void alterar(Fechamento fechamento) {
+		this.sessao.update(fechamento);
+	}
+	
+	@Override
+	public Fechamento buscarPorId(Integer id) {
+		Query consultaId = this.sessao
+				.createQuery("from Fechamento as e where e.id_fechamento = :id_fechamento");
+		consultaId.setInteger("id_fechamento", id);
+		return (Fechamento) consultaId.uniqueResult();
+	}
+	
+	
+	@Override
+	public Fechamento pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from Fechamento c where c.id_fechamento like :id_Fechamento");
+		consultaNome.setString("id_fechamento", "%" + string + "%");
+		return (Fechamento) consultaNome.uniqueResult();
+	}
+	
+	
+	@Override  
+	   public Fechamento carregar(Integer fechamento) {  
+	      // return (Fechamento) this.sessao.get(Fechamento.class, fechamento);
+		String string = Integer.toString(fechamento);
+		Query consultaNome = this.sessao
+				.createQuery("from Fechamento c where c.id_fechamento like :id_fechamento");
+		consultaNome.setString("id_fechamento", "%" + string + "%");
+		return (Fechamento) consultaNome.uniqueResult();
+	   }  
+
+}
+

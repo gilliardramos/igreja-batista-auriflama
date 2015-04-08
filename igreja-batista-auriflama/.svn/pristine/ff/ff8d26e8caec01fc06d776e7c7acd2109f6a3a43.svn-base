@@ -1,0 +1,156 @@
+package com.toledo.salao.servico;
+
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.toledo.salao.funcao.Funcao;
+
+@Entity
+@Table(name = "servico")
+public class Servico {
+
+
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result
+			+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+	result = prime * result
+			+ ((duracao_media == null) ? 0 : duracao_media.hashCode());
+	result = prime * result + ((funcao == null) ? 0 : funcao.hashCode());
+	result = prime * result
+			+ ((id_servico == null) ? 0 : id_servico.hashCode());
+	result = prime * result
+			+ ((nome_servico == null) ? 0 : nome_servico.hashCode());
+	result = prime * result
+			+ ((preco_servico == null) ? 0 : preco_servico.hashCode());
+	return result;
+}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Servico other = (Servico) obj;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (duracao_media == null) {
+			if (other.duracao_media != null)
+				return false;
+		} else if (!duracao_media.equals(other.duracao_media))
+			return false;
+		if (funcao == null) {
+			if (other.funcao != null)
+				return false;
+		} else if (!funcao.equals(other.funcao))
+			return false;
+		if (id_servico == null) {
+			if (other.id_servico != null)
+				return false;
+		} else if (!id_servico.equals(other.id_servico))
+			return false;
+		if (nome_servico == null) {
+			if (other.nome_servico != null)
+				return false;
+		} else if (!nome_servico.equals(other.nome_servico))
+			return false;
+		if (preco_servico == null) {
+			if (other.preco_servico != null)
+				return false;
+		} else if (!preco_servico.equals(other.preco_servico))
+			return false;
+		return true;
+	}
+
+@Id
+@GeneratedValue
+@Column (name = "id_servico")
+private Integer id_servico;
+private  String nome_servico;
+private String preco_servico;
+private String duracao_media;
+@Column(name="datacadastro", updatable=false)
+private Date dataCadastro;
+
+@ManyToOne( cascade = {CascadeType.REFRESH})
+@JoinColumn(name ="id_funcao")
+private Funcao funcao;
+
+
+
+public Funcao getFuncao() {
+	return funcao;
+}
+
+public void setFuncao(Funcao funcao) {
+	this.funcao = funcao;
+}
+
+public String getPreco_servico() {
+	return preco_servico;
+}
+
+public void setPreco_servico(String preco_servico) {
+	this.preco_servico = preco_servico;
+}
+
+public Servico(){
+	
+}	
+
+public Servico(String nome_servico, String preco_servico, String duracao_media, Date dataCadastro, Funcao funcao) {
+	super();
+	this.nome_servico = nome_servico;
+	this.preco_servico = preco_servico;
+	this.duracao_media = duracao_media;
+	this.dataCadastro = dataCadastro;
+	this.funcao = funcao;
+		}
+
+
+
+public Integer getId_servico() {
+	return id_servico;
+}
+public void setId_servico(Integer id_servico) {
+	this.id_servico = id_servico;
+}
+public String getNome_servico() {
+	return nome_servico;
+}
+public void setNome_servico(String nome_servico) {
+	this.nome_servico = nome_servico;
+}
+public String getDuracao_media() {
+	return duracao_media;
+}
+public void setDuracao_media(String duracao_media) {
+	this.duracao_media = duracao_media;
+}
+
+public Date getDataCadastro() {
+	return dataCadastro;
+}
+
+public void setDataCadastro(Date dataCadastro) {
+	this.dataCadastro = dataCadastro;
+}
+
+}
+

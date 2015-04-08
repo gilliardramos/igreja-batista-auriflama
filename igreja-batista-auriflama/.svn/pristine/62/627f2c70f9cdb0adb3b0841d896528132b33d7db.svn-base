@@ -1,0 +1,53 @@
+package com.toledo.salao.endereco;
+
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+
+
+public class EnderecoRN {
+
+	private EnderecoDao enderecoDao;
+
+	public EnderecoRN() {
+		this.enderecoDao = DAOFactory.criaEnderecoDao();
+	}
+
+	public void salvar(Endereco e1) {
+		this.enderecoDao.salvar(e1);
+		
+	}
+
+	public List<Endereco> listar() {
+		return this.enderecoDao.listar();
+	}
+
+	public void excluir(Endereco endereco) {
+		this.enderecoDao.excluir(endereco);
+		
+	}
+
+	public Endereco pesquisar(String string) {
+		return this.enderecoDao.pesquisar(string);
+	}
+	
+	public Endereco pesquisarPorPessoa(Integer idPessoa) {
+		return this.enderecoDao.pesquisarPorPessoa(idPessoa);
+	}
+
+	public void alterar(Endereco endereco) {
+	 this.enderecoDao.alterar(endereco);
+		
+	}	
+	
+	public Endereco carregar(Integer id) {
+		return this.enderecoDao.carregar(id);
+	}
+	
+	public List<Endereco> listarPorPessoa(Integer idPessoa) {
+		return this.enderecoDao.listarPorPessoa(idPessoa);
+	}
+	}
+

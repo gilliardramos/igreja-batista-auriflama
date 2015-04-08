@@ -1,0 +1,37 @@
+package com.toledo.salao.converter;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
+
+import com.toledo.salao.cliente.Cliente;
+import com.toledo.salao.cliente.ClienteRN;
+
+@FacesConverter(value = "converterCliente") // q q coisa mudar pra forvalue
+public class ClienteConverter implements Converter {
+
+	@Override
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		if (value != null && value.trim().length() > 0) {
+			Integer codigo = Integer.valueOf(value);
+			try {
+				ClienteRN clienteRN = new ClienteRN();
+				return clienteRN.carregar(codigo);
+			} catch (Exception e) {
+				throw new ConverterException("Não foi possível encontrar o cliente de código " + value + "." + e.getMessage());
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		if (value != null) {
+			Cliente cliente = (Cliente) value;
+			return cliente.getId_cliente().toString();
+		}
+		return "";
+	}
+}

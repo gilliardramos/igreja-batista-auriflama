@@ -1,0 +1,145 @@
+package com.toledo.salao.funcao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import com.toledo.salao.funcao.Funcao;
+import com.toledo.salao.funcao.FuncaoDao;
+
+public class FuncaoDaoHibernate implements FuncaoDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Funcao funcao) {
+		this.sessao.save(funcao);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Funcao> listar() {
+		Criteria lista = sessao.createCriteria(Funcao.class);
+		return lista.list();
+	}
+
+	@Override
+	public void excluir(Funcao funcao) {
+		this.sessao.delete(funcao);
+
+	}
+
+	/*@Override
+	public Funcao pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from funcao e where e.nome_funcao like :nome_funcao");
+		consultaNome.setString("nome_funcao", "%" + string + "%");
+		return (Funcao) consultaNome.uniqueResult();
+	}
+*/
+	@Override
+	public void alterar(Funcao funcao) {
+		this.sessao.update(funcao);
+	}
+	
+	/*@Override
+	public Funcao buscarPorId(Integer id) {
+		  if (id == null) {  
+	            return null;  
+	        } else {  
+	            sessao = this.getSessao();  
+	            Funcao funcao = ( Funcao )  
+	            sessao.get( FuncaoDao.class, id );  
+	            sessao.getTransaction().commit();  
+	            sessao.close();  
+	            return funcao;  
+	        }  
+	}*/
+
+
+	@Override
+	public Funcao buscarPorId(Integer id) {
+		Query consultaId = this.sessao
+				.createQuery("from Funcao as e where e.id_funcao = :id_funcao");
+		consultaId.setInteger("id_funcao", id);
+		return (Funcao) consultaId.uniqueResult();
+	}
+	
+	
+/*	@Override
+	public Funcao buscarPorId(Integer id) {
+		
+		System.out.print("dentro do dao hibernate  "+id);
+		Query query = sessao.createQuery("from Funcao where id_estado = :id_funcao ");
+		query.setParameter("id_funcao", id);
+		List<Funcao> list = query.list();
+		System.out.print("dentro do dao hibernate e na lista  "+list.get(0).toString());
+		//return list;
+		Funcao funcao = new Funcao();
+		return funcao;
+
+	}*/
+	
+	@Override
+	public Funcao pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from Funcao c where c.id_funcao like :id_Funcao");
+		consultaNome.setString("id_funcao", "%" + string + "%");
+		return (Funcao) consultaNome.uniqueResult();
+	}
+	
+	/*@SuppressWarnings("unchecked")
+	@Override
+	public Funcao buscar(Integer idFuncao) {
+		List<Funcionario> funcionarios = new ArrayList<>();		
+		try {
+			// o correto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			
+			
+			
+			 * Exemplo de Criteria para obter o funcionario ja com o objeto esta a que pertence, 
+			 * mas trazendo somente o funcionario do id_funcionario = 123, ou o que vc's passar por parametro
+			 
+			funcoes = (ArrayList<Funcao>)sessao.createCriteria(Funcao.class)
+					.add(Restrictions.eq("id_funcao", idFuncao))
+					.list();
+			
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista os funcionarios cadastrados. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		//return funcionarios.get(0);
+		Funcao funcao = new Funcao();
+		funcao = funcoess.get(0);
+		return funcao;
+	}
+*/
+	
+	@Override  
+	   public Funcao carregar(Integer funcao) {  
+	      // return (Funcao) this.sessao.get(Funcao.class, funcao);
+		String string = Integer.toString(funcao);
+		Query consultaNome = this.sessao
+				.createQuery("from Funcao c where c.id_funcao like :id_funcao");
+		consultaNome.setString("id_funcao", "%" + string + "%");
+		return (Funcao) consultaNome.uniqueResult();
+	   }  
+
+}
+

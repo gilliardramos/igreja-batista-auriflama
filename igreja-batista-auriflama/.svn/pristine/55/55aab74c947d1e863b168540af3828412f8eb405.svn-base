@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="pageTitle">Empresa</ui:define>
+		<ui:define name="pageHeader"></ui:define>
+		<ui:define name="body">
+
+
+			<h:form id="edicao">
+
+				<p:panel id="panelEmp" header="Cadastro de Empresa"
+					style="margin-bottom:20px;">
+
+					<p:messages id="messages" />
+
+					<h:outputLabel
+						value=" Data Cadastro: #{clienteBean.clienteSelecionado.ultimo_acesso}"
+						rendered="#{not empty clienteBean.clienteSelecionado.ultimo_acesso}">
+						<f:convertDateTime dateStyle="full" />
+					</h:outputLabel>
+
+					<h:inputHidden id="idEmpresa"
+						value="#{empresaBean.empresaSelecionada.id}" />
+
+					<p:panelGrid id="display" columns="2">
+						<h:outputLabel value="Razão:*" />
+						<p:inputText id="razao" size="65"
+							value="#{empresaBean.empresaSelecionada.razao}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="5" />
+						</p:inputText>
+
+						<h:outputLabel value="Fantasia:*" />
+						<p:inputText id="fantasia" size="65"
+							value="#{empresaBean.empresaSelecionada.fantasia}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+
+						<h:outputLabel value="CNPJ:*" />
+						<p:inputMask id="cnpj" size="16" mask="99.999.999/9999-99"
+							requiredMessage="Campo obrigatório não preenchido"
+							value="#{empresaBean.empresaSelecionada.cnpj}" required="true">
+							<!--   <f:validator validatorId="cnpj" /> -->
+						</p:inputMask>
+
+						<h:outputLabel value="IE:*" />
+						<p:inputText id="ie" size="16"
+							value="#{empresaBean.empresaSelecionada.ie}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+
+						<h:outputLabel value="Endereco:*" />
+						<p:inputText id="endereco" size="65"
+							value="#{empresaBean.empresaSelecionada.endereco}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+
+						<h:outputLabel value="Bairro:*" />
+						<p:inputText id="bairro" size="25"
+							value="#{empresaBean.empresaSelecionada.bairro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+
+						<h:outputLabel value="Cidade:*" />
+						<p:inputText id="cidade" size="25"
+							value="#{empresaBean.empresaSelecionada.cidade}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+
+						<h:outputLabel value="Estado:*" />
+						<p:inputText id="estado" size="25"
+							value="#{empresaBean.empresaSelecionada.uf}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+
+						<h:outputLabel value="CEP:*" />
+						<p:inputMask id="cep" size="16" mask="99.999-999"
+							requiredMessage="Campo obrigatório não preenchido"
+							value="#{empresaBean.empresaSelecionada.cep}" required="true">
+						</p:inputMask>
+
+						<h:outputLabel value="DDD:*" />
+						<p:inputText id="ddd" size="3"
+							value="#{empresaBean.empresaSelecionada.ddd}" maxlength="3"
+							required="true" validatorMessage="DDD inválido">
+							<!-- 							<f:validateRegex pattern="[0-9]" /> -->
+						</p:inputText>
+
+						<h:outputLabel value="Fone:*" />
+						<p:inputMask id="fone" size="9" mask="9999-9999"
+							requiredMessage="Campo obrigatório não preenchido"
+							value="#{empresaBean.empresaSelecionada.fone1}" required="true">
+							<!-- 							<f:validateRegex pattern="[0-9]" /> -->
+						</p:inputMask>
+
+						<h:outputLabel value="Fax:" />
+						<p:inputMask id="fax" size="9" mask="9999-9999"
+							value="#{empresaBean.empresaSelecionada.fone2}">
+							<!-- 							<f:validateRegex pattern="[0-9]" /> -->
+						</p:inputMask>
+
+						<h:outputLabel value="E-mail:*" />
+						<h:panelGroup>
+							<p:inputText id="email" label="E-mail"
+								value="#{empresaBean.empresaSelecionada.email}" size="50"
+								maxlength="50"
+								onkeydown="this.value = this.value.toLowerCase();"
+								onkeyup="this.value = this.value.toLowerCase()" required="true"
+								validatorMessage=" *E-mail inválido">
+								<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
+							</p:inputText>
+							<h:message for="email" />
+						</h:panelGroup>
+
+					</p:panelGrid>
+
+
+				</p:panel>
+
+				<p:commandButton value="Salvar"
+					action="/Empresa2.xhtml?faces-redirect=true" ajax="false"
+					icon="ui-icon-disk" actionListener="#{empresaBean.salvar}" />
+
+			</h:form>
+
+<!-- <h:form id="listaempresa"> -->
+
+<!-- 				<p:dataTable id="tabela" value="#{empresaBean.lista}" var="empresa"> -->
+<!-- 					<f:facet name="header">Empresa</f:facet> -->
+
+<!-- 					<p:column> -->
+<!-- 						<b><h:outputText value="#{empresa.fantasia}" /> <br /> <h:outputText -->
+<!-- 								value="#{empresa.razao}" /> <br /> <h:outputText -->
+<!-- 								value="CNPJ: #{empresa.cnpj}" /> <br /> <h:outputText -->
+<!-- 								value="IE: #{empresa.ie}" /> <br /> <h:outputText -->
+<!-- 								value="#{empresa.endereco}" /> <h:outputText -->
+<!-- 								value="    #{empresa.bairro}" /> <h:outputText -->
+<!-- 								value="    #{empresa.cidade}" /> <h:outputText -->
+<!-- 								value=" -  #{empresa.uf}" /> <br /> <h:outputText -->
+<!-- 								value="CEP: #{empresa.cep}" /> <br /> <h:outputText -->
+<!-- 								value="FONE: #{empresa.ddd} #{empresa.fone1} #{empresa.fone2}" /> -->
+<!-- 							<br /> <h:outputText value="E-mail: #{empresa.email}" /></b> -->
+<!-- 					</p:column> -->
+
+<!-- 					<p:column styleClass="coluna-tabela-centralizada" size="5"> -->
+<!-- 						<h:commandLink> -->
+<!-- 							<h:graphicImage library="imagens" name="editar.gif" /> -->
+<!-- 							<f:setPropertyActionListener -->
+<!-- 								target="#{empresaBean.empresaSelecionada}" value="#{empresa}" /> -->
+<!-- 						</h:commandLink> -->
+<!-- 					</p:column> -->
+
+<!-- 				</p:dataTable> -->
+
+<!-- </h:form> -->
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

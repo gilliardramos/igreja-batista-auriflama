@@ -1,0 +1,102 @@
+package com.toledo.salao.telefone;
+
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+@ManagedBean(name = "telefoneBean")
+@RequestScoped
+public class TelefoneBean {
+	
+	private Telefone telefoneSelecionada = new Telefone();
+	private List<Telefone> lista = null;
+	//private List<Cidade> listaCidade = null;
+	
+
+
+	public Telefone getTelefoneSelecionada() {
+		return telefoneSelecionada;
+	}
+
+	public void setTelefoneSelecionada(Telefone telefoneSelecionada) {
+		this.telefoneSelecionada = telefoneSelecionada;
+	}
+
+	public List<Telefone> getLista() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+		if (lista == null) {
+			lista = telefoneRN.listar();
+
+		}
+		return lista;
+	}
+
+	public void setLista(List<Telefone> lista) {
+		this.lista = lista;
+	}
+
+	/*public List<Cidade> getListaCidade() {
+		CidadeRN cidadeRN = new CidadeRN();
+		if (listaCidade == null) {
+			listaCidade = cidadeRN.listar();
+
+		}
+		return listaCidade;
+	}
+
+	public void setListaCidade(List<Ci...Estado> listaEstado) {
+		this.listaEstado = listaEstado;
+	}*/
+	
+	public void salvar() {
+		
+		if (this.telefoneSelecionada.getId_telefone() == 0) {
+			//this.telefoneSelecionada.setDataCadastro(new Date());
+			TelefoneRN telefoneRN = new TelefoneRN();
+			telefoneRN.salvar(this.telefoneSelecionada);
+			FacesMessage faces = new FacesMessage("Telefone cadastrada com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+		//	this.listaEstado = null;
+			this.setTelefoneSelecionada(null);
+
+		} else {
+			alterar();
+		}
+	}
+	
+
+
+	public void excluir() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+		telefoneRN.excluir(this.telefoneSelecionada);
+		FacesMessage faces = new FacesMessage("Telefone Excluida com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		//this.listaEstado = null;
+		this.setTelefoneSelecionada(null);
+	}
+	
+	public void alterar() {
+		//this.telefoneSelecionada.setDataCadastro(new Date());
+		TelefoneRN telefoneRN = new TelefoneRN();
+		telefoneRN.alterar(this.telefoneSelecionada);
+		FacesMessage faces = new FacesMessage("Telefone Alterada com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		//this.listaEstado = null;
+		this.setTelefoneSelecionada(null);	
+	}
+	
+	
+	
+	
+	
+	
+}

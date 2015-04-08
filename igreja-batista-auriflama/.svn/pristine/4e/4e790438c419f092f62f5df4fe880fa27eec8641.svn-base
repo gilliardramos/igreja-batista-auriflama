@@ -1,0 +1,24 @@
+package com.toledo.salao.servico;
+
+import java.util.List;
+
+import com.toledo.salao.servico.Servico;
+
+public interface ServicoDao {
+
+	public void salvar(Servico servico);
+
+	public List<Servico> listar();
+
+	public void excluir(Servico servico);
+
+	public Servico pesquisar(String string);
+
+	public void alterar(Servico servico);
+
+	public Servico buscarPorId(Integer integer);
+	
+	public Servico carregar(Integer idServico);
+
+
+}

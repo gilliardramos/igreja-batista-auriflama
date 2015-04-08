@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<div id="titulo">
+		<title><ui:insert name="pageTitle">Page Title</ui:insert></title>
+	</div>
+
+	<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
+</h:head>
+
+<h:body>
+
+	<div id="container">
+		<div id="header">
+			<ui:insert name="pageHeader">Page Header</ui:insert>
+		</div>
+		<div id="mainnav">
+			<ul>
+				<li><a href="paginaInicial.jsf">Home</a></li>
+				<li><a href="#">Area do Cliente</a></li>
+				<li><a href="#">Meus Agendamentos</a></li>
+				<li><a href="#">Serviços</a></li>
+				<li><a href="#">Agendamento</a></li>
+				<li><a href="#">Sobre</a></li>
+			</ul>
+		</div>
+		<div id="menu">
+			<h3>Cadastros</h3>
+			<ul>
+				<li><a href="Estado.jsf">Estado</a></li>
+				<li><a href="Cidade.jsf">Cidade</a></li>
+				<li><a href="Cliente.jsf">Cliente</a></li>
+				<li><a href="Empresa2.jsf">Empresa</a></li>
+				<li><a href="Historico.jsf">Historico</a></li>
+				<li><a href="Servico.jsf">Serviço</a></li>
+				<li><a href="Funcao.jsf">Função</a></li>
+				<li><a href="Agendamento.jsf">Agendamento</a></li>
+			</ul>
+			<h3>Last 10 Entries</h3>
+			<ul>
+				<li><a href="#">Entry 120 (4)</a></li>
+				<li><a href="#">Entry 119 (0)</a></li>
+				<li><a href="#">Entry 118 (9)</a></li>
+				<li><a href="#">Entry 117 (3)</a></li>
+			</ul>
+		</div>
+		<div id="contents">
+			<ui:insert name="body">Page Body</ui:insert>
+		</div>
+		<div id="footer">
+			<ui:insert name="footer">SALAO DE BELEZA - BGL</ui:insert>
+		</div>
+	</div>
+
+</h:body>
+
+</html>

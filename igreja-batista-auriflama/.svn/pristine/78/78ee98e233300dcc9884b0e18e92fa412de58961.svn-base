@@ -1,0 +1,43 @@
+package com.toledo.salao.empresa;
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+public class EmpresaRN {
+	
+	private EmpresaDao empresaDao;
+
+	public EmpresaRN() {
+		this.empresaDao = DAOFactory.criaEmpresaDao();
+	}
+
+	public void salvar(Empresa e1) {
+		this.empresaDao.salvar(e1);
+		
+	}
+
+	public List<Empresa> listar() {
+		return this.empresaDao.listar();
+	}
+
+	public void excluir(Empresa empresa) {
+		this.empresaDao.excluir(empresa);
+		
+	}
+
+	public Empresa pesquisar(String string) {
+		return this.empresaDao.pesquisar(string);
+	}
+
+	
+	public void alterar(Empresa empresa) {
+	 this.empresaDao.alterar(empresa);
+		
+	}	
+	
+	public Empresa carregar(Integer id) {
+		return this.empresaDao.carregar(id);
+	}
+
+}

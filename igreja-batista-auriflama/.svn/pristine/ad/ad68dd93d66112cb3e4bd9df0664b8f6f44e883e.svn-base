@@ -1,0 +1,138 @@
+package com.toledo.salao.util;
+
+import com.toledo.salao.agenda.AgendaDao;
+import com.toledo.salao.agenda.AgendaDaoHibernate;
+import com.toledo.salao.cidade.CidadeDao;
+import com.toledo.salao.cidade.CidadeDaoHibernate;
+import com.toledo.salao.cliente.ClienteDao;
+import com.toledo.salao.cliente.ClienteDaoHibernate;
+import com.toledo.salao.empresa.EmpresaDao;
+import com.toledo.salao.empresa.EmpresaDaoHibernate;
+import com.toledo.salao.endereco.EnderecoDao;
+import com.toledo.salao.endereco.EnderecoDaoHibernate;
+import com.toledo.salao.estado.EstadoDao;
+import com.toledo.salao.estado.EstadoDaoHibernate;
+import com.toledo.salao.fechamento.FechamentoDao;
+import com.toledo.salao.fechamento.FechamentoDaoHibernate;
+import com.toledo.salao.funcao.FuncaoDao;
+import com.toledo.salao.funcao.FuncaoDaoHibernate;
+import com.toledo.salao.funcionario.FuncionarioDao;
+import com.toledo.salao.funcionario.FuncionarioDaoHibernate;
+import com.toledo.salao.historico.HistoricoDao;
+import com.toledo.salao.historico.HistoricoDaoHibernate;
+import com.toledo.salao.pessoa.PessoaDao;
+import com.toledo.salao.pessoa.PessoaDaoHibernate;
+import com.toledo.salao.servico.ServicoDao;
+import com.toledo.salao.servico.ServicoDaoHibernate;
+import com.toledo.salao.telefone.TelefoneDao;
+import com.toledo.salao.telefone.TelefoneDaoHibernate;
+
+public class DAOFactory {
+
+	public static EstadoDao criaEstadoDao() {
+		EstadoDaoHibernate estadoDaoHibernate = new EstadoDaoHibernate();
+		estadoDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return estadoDaoHibernate;
+	}
+
+	public static CidadeDao criaCidadeDao() {
+		CidadeDaoHibernate cidadeDaoHibernate = new CidadeDaoHibernate();
+		cidadeDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return cidadeDaoHibernate;
+	}
+
+	public static EnderecoDao criaEnderecoDao() {
+		EnderecoDaoHibernate enderecoDaoHibernate = new EnderecoDaoHibernate();
+		enderecoDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return enderecoDaoHibernate;
+	}
+
+	public static PessoaDao criaPessoaDao() {
+		PessoaDaoHibernate pessoaDaoHibernate = new PessoaDaoHibernate();
+		pessoaDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return pessoaDaoHibernate;
+	}
+
+	public static ClienteDao criaClienteDao() {
+		ClienteDaoHibernate clienteDaoHibernate = new ClienteDaoHibernate();
+		clienteDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return clienteDaoHibernate;
+	}
+
+	public static TelefoneDao criaTelefoneDao() {
+		TelefoneDaoHibernate telefoneDaoHibernate = new TelefoneDaoHibernate();
+		telefoneDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return telefoneDaoHibernate;
+	}
+
+	public static EmpresaDao criaEmpresaDao() {
+		EmpresaDaoHibernate empresaDaoHibernate = new EmpresaDaoHibernate();
+		empresaDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return empresaDaoHibernate;
+	}
+
+	public static FuncaoDao criaFuncaoDao() {
+		FuncaoDaoHibernate funcaoDaoHibernate = new FuncaoDaoHibernate();
+		funcaoDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return funcaoDaoHibernate;
+	}
+
+	public static FuncionarioDao criaFuncionarioDao() {
+		FuncionarioDaoHibernate funcionarioDaoHibernate = new FuncionarioDaoHibernate();
+		funcionarioDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return funcionarioDaoHibernate;
+	}
+
+	public static HistoricoDao criaHistoricoDao() {
+		HistoricoDaoHibernate historicoDaoHibernate = new HistoricoDaoHibernate();
+		historicoDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return historicoDaoHibernate;
+	}
+	
+	public static AgendaDao criaAgendaDao() {
+		AgendaDaoHibernate agendaDaoHibernate = new AgendaDaoHibernate();
+		agendaDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return agendaDaoHibernate;
+	}
+	
+	public static FechamentoDao criaFechamentoDao() {
+		FechamentoDaoHibernate fechamentoDaoHibernate = new FechamentoDaoHibernate();
+		fechamentoDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return fechamentoDaoHibernate;
+	}
+	
+	public static ServicoDao criaServicoDao() {
+		ServicoDaoHibernate servicoDaoHibernate = new ServicoDaoHibernate();
+		servicoDaoHibernate.setSessao(HibernateUtil.getSession()
+				.getCurrentSession());
+
+		return servicoDaoHibernate;
+	}
+	
+	
+
+}

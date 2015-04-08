@@ -1,0 +1,129 @@
+package com.toledo.salao.servico;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.criteria.CriteriaBuilder.In;
+
+import com.toledo.salao.funcao.Funcao;
+import com.toledo.salao.funcao.FuncaoRN;
+
+@ManagedBean(name = "servicoBean")
+@RequestScoped
+public class ServicoBean {
+	
+	private Servico servicoSelecionado = new Servico();
+	private List<Servico> lista = null;
+	//private List<Funcao> listaFuncao = null;
+	private Integer duracao_media = null;
+	
+
+
+	
+
+	
+
+	public Integer getDuracao_media() {
+		return duracao_media;
+	}
+
+	public void setDuracao_media(Integer duracao_media) {
+		this.duracao_media = duracao_media;
+	}
+
+	public Servico getServicoSelecionado() {
+		return servicoSelecionado;
+	}
+
+	public void setServicoSelecionado(Servico servicoSelecionado) {
+		this.servicoSelecionado = servicoSelecionado;
+	}
+
+	public List<Servico> getLista() {
+		ServicoRN servicoRN = new ServicoRN();
+		if (lista == null) {
+			lista = servicoRN.listar();
+
+		}
+		return lista;
+	}
+
+	public void setLista(List<Servico> lista) {
+		this.lista = lista;
+	}
+
+//	public List<Funcao> getListaFuncao() {
+//		FuncaoRN funcaoRN = new FuncaoRN();
+//		if (listaFuncao == null) {
+//			listaFuncao = funcaoRN.listar();
+//
+//		}
+//		return listaFuncao;
+//	}
+//
+//	public void setListaFuncao(List<Funcao> listaFuncao) {
+//		this.listaFuncao = listaFuncao;
+//	}
+//	
+	public void salvar() {
+		
+		if (this.servicoSelecionado.getId_servico() == 0) {
+			this.servicoSelecionado.setDataCadastro(new Date());
+			this.servicoSelecionado.setDuracao_media(Integer.toString(this.duracao_media));
+			ServicoRN servicoRN = new ServicoRN();
+			servicoRN.salvar(this.servicoSelecionado);
+			FacesMessage faces = new FacesMessage("Servico cadastrado com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+			//this.listaFuncao = null;
+			this.setServicoSelecionado(null);
+			this.setDuracao_media(null);
+
+		} else {
+			alterar();
+		}
+	}
+	
+
+
+	public void excluir() {
+		ServicoRN servicoRN = new ServicoRN();
+		servicoRN.excluir(this.servicoSelecionado);
+		FacesMessage faces = new FacesMessage("Servico Excluido com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		//this.listaFuncao = null;
+		this.setServicoSelecionado(null);
+		this.setDuracao_media(null);
+	}
+	
+	public void alterar() {
+		this.servicoSelecionado.setDataCadastro(new Date());
+		this.servicoSelecionado.setDuracao_media(Integer.toString(this.duracao_media));
+		ServicoRN servicoRN = new ServicoRN();
+		servicoRN.alterar(this.servicoSelecionado);
+		FacesMessage faces = new FacesMessage("Servico Alterado com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+	//	this.listaFuncao = null;
+		this.setServicoSelecionado(null);	
+		this.setDuracao_media(null);
+	}
+	
+	
+	public void populacampos(){
+		this.setDuracao_media(Integer.parseInt((this.servicoSelecionado.getDuracao_media())));
+	}
+	
+	
+	
+	
+}

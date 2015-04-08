@@ -1,0 +1,128 @@
+package com.toledo.salao.cliente;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+
+
+public class ClienteDaoHibernate implements ClienteDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Cliente cliente) {
+		this.sessao.save(cliente);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Cliente> listar() {
+		List<Cliente> clientes = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			clientes = (ArrayList<Cliente>)sessao.createCriteria(Cliente.class)	
+				.list();
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao listar as clientes cadastradas. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return clientes;
+		
+	}
+
+	@Override
+	public void excluir(Cliente cliente) {
+		this.sessao.delete(cliente);
+		
+	}
+
+	@Override
+	public Cliente pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from cliente c where c.nome_cliente like :nome_cliente");
+		consultaNome.setString("nome_cliente", "%" + string + "%");
+		return (Cliente) consultaNome.uniqueResult();
+	}
+	
+	@Override
+	public Cliente pesquisarPorEmail(String string) {
+		Cliente cliente = new Cliente();
+		try {
+		
+			cliente = (Cliente)this.sessao.createCriteria(Cliente.class)
+				
+					.add(Restrictions.eq("email", string))
+					.list();
+			
+			//teste meu
+		
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao buscar o cliente com esse email. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		//System.out.println(cliente.getNome_pessoa());
+		return cliente;
+	}
+
+
+	@Override
+	public void alterar(Cliente cliente) {
+		this.sessao.update(cliente);
+	}
+	
+	
+@Override
+public Cliente carregar(Integer idcliente){
+	return (Cliente) this.sessao.get(Cliente.class, idcliente);
+}
+	
+	
+	
+	@Override
+	public Cliente pesquisarPorEmailCriteria(String email) {
+
+
+		Cliente cliente = new Cliente();
+		
+		
+		try {
+			Criteria crit = sessao.createCriteria(Cliente.class);
+			//crit.setMaxResults(1);
+			crit.add(Restrictions.eq("email", email));
+			cliente = (Cliente) crit.uniqueResult();
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao consulta o cliente informado. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		System.out.println("Clienteooo: " + cliente.getNome_pessoa());
+		return cliente;
+		
+	}
+
+	
+}

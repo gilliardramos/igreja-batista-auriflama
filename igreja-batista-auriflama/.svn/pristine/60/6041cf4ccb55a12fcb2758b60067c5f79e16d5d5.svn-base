@@ -1,0 +1,158 @@
+package com.toledo.salao.fechamento;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "fechamento")
+public class Fechamento {
+
+	
+	@Id
+	@GeneratedValue
+	@Column (name = "id_fechamento")
+	private Integer id_fechamento;
+	private Date data_fechamento;
+	private String valor_total;
+	private String status_fechamento;
+	private String forma_pagto;
+	
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result
+				+ ((data_fechamento == null) ? 0 : data_fechamento.hashCode());
+		result = prime * result
+				+ ((forma_pagto == null) ? 0 : forma_pagto.hashCode());
+		result = prime * result
+				+ ((id_fechamento == null) ? 0 : id_fechamento.hashCode());
+		result = prime
+				* result
+				+ ((status_fechamento == null) ? 0 : status_fechamento
+						.hashCode());
+		result = prime * result
+				+ ((valor_total == null) ? 0 : valor_total.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fechamento other = (Fechamento) obj;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (data_fechamento == null) {
+			if (other.data_fechamento != null)
+				return false;
+		} else if (!data_fechamento.equals(other.data_fechamento))
+			return false;
+		if (forma_pagto == null) {
+			if (other.forma_pagto != null)
+				return false;
+		} else if (!forma_pagto.equals(other.forma_pagto))
+			return false;
+		if (id_fechamento == null) {
+			if (other.id_fechamento != null)
+				return false;
+		} else if (!id_fechamento.equals(other.id_fechamento))
+			return false;
+		if (status_fechamento == null) {
+			if (other.status_fechamento != null)
+				return false;
+		} else if (!status_fechamento.equals(other.status_fechamento))
+			return false;
+		if (valor_total == null) {
+			if (other.valor_total != null)
+				return false;
+		} else if (!valor_total.equals(other.valor_total))
+			return false;
+		return true;
+	}
+
+	@Column(name="datacadastro", updatable=false)
+	private Date dataCadastro;
+	
+
+	//Cria um objeto Estado public
+	public Fechamento(){
+		
+	}	
+	
+	public Fechamento(Date data_fechamento, String valor_total, String status_fechamento, String forma_pagto) {
+		super();
+		this.data_fechamento = data_fechamento;
+		this.valor_total = valor_total;
+		this.status_fechamento = status_fechamento;
+		this.forma_pagto = forma_pagto;
+			}
+	public Integer getId_fechamento() {
+		return id_fechamento;
+	}
+
+	public void setId_fechamento(Integer id_fechamento) {
+		this.id_fechamento = id_fechamento;
+	}
+
+	public Date getData_fechamento() {
+		return data_fechamento;
+	}
+
+	public void setData_fechamento(Date data_fechamento) {
+		this.data_fechamento = data_fechamento;
+	}
+
+	public String getValor_total() {
+		return valor_total;
+	}
+
+	public void setValor_total(String valor_total) {
+		this.valor_total = valor_total;
+	}
+
+	public String getStatus_fechamento() {
+		return status_fechamento;
+	}
+
+	public void setStatus_fechamento(String status_fechamento) {
+		this.status_fechamento = status_fechamento;
+	}
+
+	public String getForma_pagto() {
+		return forma_pagto;
+	}
+
+	public void setForma_pagto(String forma_pagto) {
+		this.forma_pagto = forma_pagto;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+
+
+
+}
+

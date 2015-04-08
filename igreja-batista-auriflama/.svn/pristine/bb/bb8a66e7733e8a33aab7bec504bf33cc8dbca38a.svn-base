@@ -1,0 +1,22 @@
+package com.toledo.salao.historico;
+
+import java.util.List;
+
+import com.toledo.salao.historico.Historico;
+
+public interface HistoricoDao {
+
+	public void salvar(Historico historico);
+
+	public List<Historico> listar();
+
+	public void excluir(Historico historico);
+
+	public Historico pesquisar(String string);
+
+	public void alterar(Historico historico);
+
+	public Historico carregar(Integer idHistorico);
+
+
+}

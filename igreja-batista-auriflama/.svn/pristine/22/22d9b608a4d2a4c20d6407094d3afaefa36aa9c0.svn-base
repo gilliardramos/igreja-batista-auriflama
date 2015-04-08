@@ -1,0 +1,84 @@
+package com.toledo.salao.historico;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+@ManagedBean(name = "historicoBean")
+@RequestScoped
+public class HistoricoBean {
+
+	private Historico historicoSelecionado = new Historico();
+	private List<Historico> lista = null;
+	private Date dthistorico = new Date();
+
+	public Date getDthistorico() {
+		return dthistorico;
+	}
+
+	public void setDthistorico(Date dthistorico) {
+		this.dthistorico = dthistorico;
+	}
+
+	public void salvar() {
+		if (this.historicoSelecionado.getId_historico() == 0) {
+			System.out.println("Entrei para Salvar" + this.historicoSelecionado.getId_historico());
+			System.out.println("Entrei para Salvar" + this.historicoSelecionado.getObservacao());
+			HistoricoRN historicoRN = new HistoricoRN();
+			historicoSelecionado.setDatahistorico(dthistorico);
+			System.out.println("Entrei para Salvar" + this.historicoSelecionado.getDatahistorico());
+			historicoRN.salvar(historicoSelecionado);
+			System.out.println("Entrei para Salvar" + this.historicoSelecionado.getObservacao());
+			FacesMessage faces = new FacesMessage(
+					"Historico cadastrado com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+			this.setHistoricoSelecionado(null);
+		} else {
+			alterar();
+		}
+	}
+
+	public Historico getHistoricoSelecionado() {
+		return historicoSelecionado;
+	}
+
+	public void setHistoricoSelecionado(Historico historicoSelecionado) {
+		this.historicoSelecionado = historicoSelecionado;
+	}
+
+	public List<Historico> getLista() {
+		HistoricoRN historicoRN = new HistoricoRN();
+		if (lista == null) {
+			lista = historicoRN.listar();
+
+		}
+		return lista;
+	}
+
+
+	public void excluir() {
+		HistoricoRN historicoRN = new HistoricoRN();
+		historicoRN.excluir(this.historicoSelecionado);
+		FacesMessage faces = new FacesMessage("historico Excluida com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setHistoricoSelecionado(null);
+	}
+
+	public void alterar() {
+		HistoricoRN historicoRN = new HistoricoRN();
+		historicoRN.alterar(this.historicoSelecionado);
+		FacesMessage faces = new FacesMessage("Historico Alterado com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setHistoricoSelecionado(null);
+	}
+}

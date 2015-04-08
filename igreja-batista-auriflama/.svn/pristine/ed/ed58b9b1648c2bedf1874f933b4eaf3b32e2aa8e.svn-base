@@ -1,0 +1,175 @@
+package com.toledo.salao.funcionario;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+import com.toledo.salao.agenda.Agenda;
+import com.toledo.salao.funcao.Funcao;
+import com.toledo.salao.funcionario.Funcionario;
+import com.toledo.salao.funcionario.FuncionarioDao;
+import com.toledo.salao.servico.Servico;
+
+public class FuncionarioDaoHibernate implements FuncionarioDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Funcionario funcionario) {
+		this.sessao.save(funcionario);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Funcionario> listar() {
+		List<Funcionario> funcionarios = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			funcionarios = (ArrayList<Funcionario>)sessao.createCriteria(Funcionario.class)	
+				.list();
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as funcionarios cadastrados. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return funcionarios;
+		
+	}
+
+	@Override
+	public void excluir(Funcionario funcionario) {
+		this.sessao.delete(funcionario);
+		
+	}
+
+	@Override
+	public Funcionario pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from funcionario c where c.nome_funcionario like :nome_funcionario");
+		consultaNome.setString("nome_funcionario", "%" + string + "%");
+		return (Funcionario) consultaNome.uniqueResult();
+	}
+	
+	@Override
+	public Funcionario pesquisarPorEmail(String string) {
+		Funcionario funcionario = new Funcionario();
+		try {
+		
+			funcionario = (Funcionario)this.sessao.createCriteria(Funcionario.class)
+				
+					.add(Restrictions.eq("email", string))
+					.list();
+			
+			//teste meu
+		
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao buscar o funcionario com esse email. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		//System.out.println(cliente.getNome_pessoa());
+		return funcionario;
+	}
+
+
+	@Override
+	public void alterar(Funcionario funcionario) {
+		this.sessao.update(funcionario);
+	}
+	
+	
+//	@Override  
+//	   public Funcionario carregar(Integer funcionario) {  
+//	      // return (Funcionario) this.sessao.get(Funcao.class, funcao);
+//		String string = Integer.toString(funcionario);
+//		Query consultaNome = this.sessao
+//				.createQuery("from Funcionario c where c.id_funcionario like :id_funcionario");
+//		consultaNome.setString("id_funcionario", "%" + string + "%");
+//		return (Funcionario) consultaNome.uniqueResult();
+//	   }  
+//	
+	
+	
+	@Override
+	public Funcionario pesquisarPorEmailCriteria(String email) {
+
+
+		Funcionario funcionario = new Funcionario();
+		
+		
+		try {
+			Criteria crit = sessao.createCriteria(Funcionario.class);
+			//crit.setMaxResults(1);
+			crit.add(Restrictions.eq("email", email));
+			funcionario = (Funcionario) crit.uniqueResult();
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao consulta o funcionario informado. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		System.out.println("Funcionarioooo: " + funcionario.getNome_pessoa());
+		return funcionario;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Funcionario> listarPorServico(Servico servico) {
+		List<Funcionario> funcionarios = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			funcionarios = (ArrayList<Funcionario>)sessao
+					.createCriteria(Funcionario.class)
+						//.setFetchMode("funcao", FetchMode.JOIN)
+						.createAlias("funcao", "fn")
+						.createAlias("servico", "sv")
+						 .add( Restrictions.eqProperty("fv.id_funcao", "sv.id_funcao") )
+						//.setFetchMode("servico", FetchMode.JOIN)
+					    //.setFetchMode("pessoa", FetchMode.JOIN)
+						.add(Restrictions.eq("sv.nome_servico", servico.getNome_servico()))
+					.list();
+			//teste
+//			Criteria c = sessao.createCriteria(Funcionario.class, "funcionario");
+//			c.createAlias("funcionario.funcao", "funcao"); // inner join by default
+//			c.createAlias("funcao", "servico.funcao");
+//			c.add(Restrictions.eq("servico.nome_servico", servico.getNome_servico()));
+//			return c.list();
+			//teste
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as funcionarios cadastrados. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return funcionarios;
+		
+	}
+
+
+	
+}

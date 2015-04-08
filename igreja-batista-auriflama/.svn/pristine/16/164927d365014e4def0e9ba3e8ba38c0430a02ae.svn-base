@@ -1,0 +1,60 @@
+package com.toledo.salao.funcionario;
+
+import java.util.List;
+
+import com.toledo.salao.funcionario.Funcionario;
+import com.toledo.salao.funcionario.FuncionarioDao;
+import com.toledo.salao.servico.Servico;
+import com.toledo.salao.util.DAOFactory;
+
+public class FuncionarioRN {
+
+	private FuncionarioDao funcionarioDao;
+
+	public FuncionarioRN() {
+		this.funcionarioDao = DAOFactory.criaFuncionarioDao();
+	}
+
+	public void salvar(Funcionario e1) {
+		this.funcionarioDao.salvar(e1);
+		
+	}
+
+	public List<Funcionario> listar() {
+		return this.funcionarioDao.listar();
+	}
+
+	public void excluir(Funcionario funcionario) {
+		this.funcionarioDao.excluir(funcionario);
+		
+	}
+
+	public Funcionario pesquisar(String string) {
+		return this.funcionarioDao.pesquisar(string);
+	}
+
+	public Funcionario pesquisarPorEmail(String string) {
+		return this.funcionarioDao.pesquisarPorEmail(string);
+	}
+	
+	public void alterar(Funcionario funcionario) {
+	 this.funcionarioDao.alterar(funcionario);
+		
+	}	
+	
+//	public Cliente carregar(Integer id) {
+//		return this.clienteDao.carregar(id);
+//	}
+	
+	public Funcionario pesquisarPorEmailCriteria(String string) {
+		Funcionario funcionario = this.funcionarioDao.pesquisarPorEmailCriteria(string);
+		return funcionario;
+		//return this.clienteDao.pesquisarPorEmailCriteria(string);
+	}
+	
+	public List<Funcionario> listarPorServico(Servico servico) {
+		return this.funcionarioDao.listarPorServico(servico);
+	}
+	
+	}
+

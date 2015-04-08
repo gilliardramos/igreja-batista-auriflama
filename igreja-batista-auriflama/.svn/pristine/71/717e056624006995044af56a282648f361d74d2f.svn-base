@@ -1,0 +1,80 @@
+package com.toledo.salao.funcao;
+
+import java.util.Date;
+import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+@ManagedBean(name = "funcaoBean")
+@RequestScoped
+public class FuncaoBean {
+
+	private Funcao funcaoSelecionada = new Funcao();
+	private List<Funcao> lista = null;
+
+	public void salvar() {
+		if (this.funcaoSelecionada.getId_funcao() == 0) {
+			FuncaoRN funcaoRN = new FuncaoRN();
+			funcaoSelecionada.setDataCadastro(new Date());
+			funcaoRN.salvar(funcaoSelecionada);
+			FacesMessage faces = new FacesMessage(
+					"Funcao cadastrado com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+			this.setFuncaoSelecionada(null);
+		} else {
+			alterar();
+		}
+	}
+
+	public Funcao getFuncaoSelecionada() {
+		return funcaoSelecionada;
+	}
+
+	public void setFuncaoSelecionada(Funcao funcaoSelecionada) {
+		this.funcaoSelecionada = funcaoSelecionada;
+	}
+
+	public List<Funcao> getLista() {
+		FuncaoRN funcaoRN = new FuncaoRN();
+		if (lista == null) {
+			lista = funcaoRN.listar();
+
+		}
+		return lista;
+	}
+
+	/*public Funcao buscarPorId() {
+		FuncaoRN funcaoRN = new FuncaoRN();
+		if (this.funcaoSelecionado.getId_funcao() == null) {
+			return null;
+		}else{
+			
+		funcaoRN.buscarPorId(this.funcaoSelecionado.getId_funcao());
+
+		return funcaoBuscado;
+	}
+	}*/
+	public void excluir() {
+		FuncaoRN funcaoRN = new FuncaoRN();
+		funcaoRN.excluir(this.funcaoSelecionada);
+		FacesMessage faces = new FacesMessage("Funcao Excluido com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setFuncaoSelecionada(null);
+	}
+
+	public void alterar() {
+		FuncaoRN funcaoRN = new FuncaoRN();
+		funcaoRN.alterar(this.funcaoSelecionada);
+		FacesMessage faces = new FacesMessage("Funcao Alterado com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setFuncaoSelecionada(null);
+	}
+}

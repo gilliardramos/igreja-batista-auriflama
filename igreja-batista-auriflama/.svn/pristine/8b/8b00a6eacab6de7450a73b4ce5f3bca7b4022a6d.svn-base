@@ -1,0 +1,66 @@
+package com.toledo.salao.historico;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import com.toledo.salao.historico.Historico;
+import com.toledo.salao.historico.HistoricoDao;
+
+public class HistoricoDaoHibernate implements HistoricoDao {
+
+	private Session sessao;
+
+	@Override
+	public void salvar(Historico historico) {
+		this.sessao.save(historico);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Historico> listar() {
+		Criteria lista = sessao.createCriteria(Historico.class);
+		return lista.list();
+	}
+
+	@Override
+	public void excluir(Historico historico) {
+		this.sessao.delete(historico);
+
+	}
+
+	@Override
+	public void alterar(Historico historico) {
+		this.sessao.update(historico);
+	}
+
+
+	@Override
+	public Historico pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from Historico c where c.id_historico like :id_Historico");
+		consultaNome.setString("id_historico", "%" + string + "%");
+		return (Historico) consultaNome.uniqueResult();
+	}
+
+	@Override
+	public Historico carregar(Integer historico) {
+		String string = Integer.toString(historico);
+		Query consultaNome = this.sessao
+				.createQuery("from Historico c where c.id_historico like :id_historico");
+		consultaNome.setString("id_estado", "%" + string + "%");
+		return (Historico) consultaNome.uniqueResult();
+	}
+
+}

@@ -1,0 +1,100 @@
+package com.toledo.salao.funcao;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "funcao")
+public class Funcao {
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result
+				+ ((id_funcao == null) ? 0 : id_funcao.hashCode());
+		result = prime * result
+				+ ((nome_funcao == null) ? 0 : nome_funcao.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcao other = (Funcao) obj;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (id_funcao == null) {
+			if (other.id_funcao != null)
+				return false;
+		} else if (!id_funcao.equals(other.id_funcao))
+			return false;
+		if (nome_funcao == null) {
+			if (other.nome_funcao != null)
+				return false;
+		} else if (!nome_funcao.equals(other.nome_funcao))
+			return false;
+		return true;
+	}
+
+	@Id
+	@GeneratedValue
+	@Column (name = "id_funcao")
+	private Integer id_funcao;
+
+
+	private  String nome_funcao;
+	@Column(name="datacadastro", updatable=false)
+	private Date dataCadastro;
+	
+	//Cria um objeto Funcao public
+	public Funcao(){
+		
+	}	
+	
+	public Funcao(String nome_funcao) {
+		super();
+		this.nome_funcao = nome_funcao;
+			}
+
+	public Integer getId_funcao() {
+		return id_funcao;
+	}
+
+	public void setId_funcao(Integer id_funcao) {
+		this.id_funcao = id_funcao;
+	}
+
+	public String getNome_funcao() {
+		return nome_funcao;
+	}
+
+	public void setNome_funcao(String nome_funcao) {
+		this.nome_funcao = nome_funcao;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+
+}

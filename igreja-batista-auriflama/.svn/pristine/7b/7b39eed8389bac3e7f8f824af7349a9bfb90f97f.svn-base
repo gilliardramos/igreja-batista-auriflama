@@ -1,0 +1,480 @@
+package com.toledo.salao.funcionario;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+import com.toledo.salao.cidade.Cidade;
+import com.toledo.salao.endereco.Endereco;
+import com.toledo.salao.endereco.EnderecoRN;
+import com.toledo.salao.estado.Estado;
+import com.toledo.salao.estado.EstadoRN;
+import com.toledo.salao.telefone.Telefone;
+import com.toledo.salao.telefone.TelefoneRN;
+
+@ManagedBean(name = "funcionarioBean")
+@RequestScoped
+public class FuncionarioBean {
+	
+	private Funcionario funcionarioSelecionado = new Funcionario();
+	private Endereco enderecoSelecionado = new Endereco();
+	private Endereco enderecoSelecionado2 = new Endereco();
+	//private Endereco enderecoBuscado = new Endereco();
+	private Cidade cidadeSelecionada = new Cidade();
+	private Cidade cidadeSelecionada2 = new Cidade();
+	private Telefone telefoneSelecionado = new Telefone();
+	private Telefone telefoneSelecionado2 = new Telefone();
+	private boolean collapsedEndereco2 = true;
+	//private boolean requiredEndereco2 = false;
+	//private Funcionario funcionarioTitularSelecionado = new Funcionario();
+	private String comboSexo;
+	private List<Funcionario> lista = null;
+	private List<Estado> listaEstado = null;
+	private List<Endereco> listaEndereco = null;
+	private List<Telefone> listaTelefone = null;
+		
+
+	
+	
+
+//	public Endereco getEnderecoBuscado() {
+//		return enderecoBuscado;
+//	}
+//
+//	public void setEnderecoBuscado(Endereco enderecoBuscado) {
+//		this.enderecoBuscado = enderecoBuscado;
+//	}
+
+	public boolean isCollapsedEndereco2() {
+		return collapsedEndereco2;
+	}
+
+	public void setCollapsedEndereco2(boolean collapsedEndereco2) {
+		this.collapsedEndereco2 = collapsedEndereco2;
+	}
+
+//	public boolean isRequiredEndereco2() {
+//		return requiredEndereco2;
+//	}
+//
+//	public void setRequiredEndereco2(boolean requiredEndereco2) {
+//		this.requiredEndereco2 = requiredEndereco2;
+//	}
+
+	public List<Telefone> getListaTelefone() {
+		return listaTelefone;
+	}
+
+	public void setListaTelefone(List<Telefone> listaTelefone) {
+		this.listaTelefone = listaTelefone;
+	}
+
+	public Telefone getTelefoneSelecionado() {
+		return telefoneSelecionado;
+	}
+
+	public void setTelefoneSelecionado(Telefone telefoneSelecionado) {
+		this.telefoneSelecionado = telefoneSelecionado;
+	}
+
+	public Telefone getTelefoneSelecionado2() {
+		return telefoneSelecionado2;
+	}
+
+	public void setTelefoneSelecionado2(Telefone telefoneSelecionado2) {
+		this.telefoneSelecionado2 = telefoneSelecionado2;
+	}
+
+	public List<Endereco> getListaEndereco() {
+		return listaEndereco;
+	}
+
+	public void setListaEndereco(List<Endereco> listaEndereco) {
+		this.listaEndereco = listaEndereco;
+	}
+
+	
+	public Endereco getEnderecoSelecionado2() {
+		return enderecoSelecionado2;
+	}
+
+	public void setEnderecoSelecionado2(Endereco enderecoSelecionado2) {
+		this.enderecoSelecionado2 = enderecoSelecionado2;
+	}
+
+	public Cidade getCidadeSelecionada2() {
+		return cidadeSelecionada2;
+	}
+
+	public void setCidadeSelecionada2(Cidade cidadeSelecionada2) {
+		this.cidadeSelecionada2 = cidadeSelecionada2;
+	}
+
+
+	
+	
+
+
+	
+
+
+	
+
+	public Funcionario getFuncionarioSelecionado() {
+		return funcionarioSelecionado;
+	}
+
+	public void setFuncionarioSelecionado(Funcionario funcionarioSelecionado) {
+		this.funcionarioSelecionado = funcionarioSelecionado;
+	}
+	
+//	public Funcionario getFuncionarioTitularSelecionado() {	
+//		
+//		return funcionarioTitularSelecionado;
+//	}
+//
+//	
+//	public void setFuncionarioTitularSelecionado(Funcionario funcionarioTitularSelecionado) {
+//		this.funcionarioTitularSelecionado = funcionarioTitularSelecionado;
+//	}
+
+	public List<Funcionario> getLista() {
+		FuncionarioRN funcionarioRN = new FuncionarioRN();
+		if (lista == null) {
+			lista = funcionarioRN.listar();
+
+		}
+		return lista;
+	}
+
+	public void setLista(List<Funcionario> lista) {
+		this.lista = lista;
+	}
+
+		
+	public Endereco getEnderecoSelecionado() {
+		return enderecoSelecionado;
+	}
+
+	public void setEnderecoSelecionado(Endereco enderecoSelecionado) {
+		this.enderecoSelecionado = enderecoSelecionado;
+	}
+	
+	public Cidade getCidadeSelecionada() {
+		return cidadeSelecionada;
+	}
+
+	public void setCidadeSelecionada(Cidade cidadeSelecionada) {
+		this.cidadeSelecionada = cidadeSelecionada;
+	}
+	
+	public List<Estado> getListaEstado() {
+		EstadoRN estadoRN = new EstadoRN();
+		if (listaEstado == null) {
+			listaEstado = estadoRN.listar();
+
+		}
+		return listaEstado;
+	}
+
+	public void setListaEstado(List<Estado> listaEstado) {
+		this.listaEstado = listaEstado;
+	}
+	
+	public void salvar() {
+		
+		System.out.println("CPF " + this.funcionarioSelecionado.getCpf());
+		System.out.println("email " + this.funcionarioSelecionado.getEmail());
+		System.out.println("nome " + this.funcionarioSelecionado.getNome_pessoa());
+		System.out.println("RG " + this.funcionarioSelecionado.getRg());
+		System.out.println("Senha " + this.funcionarioSelecionado.getSenha());
+		System.out.println("sexo " + this.getComboSexo());
+		System.out.println("nivel " + this.funcionarioSelecionado.getNivel());
+		System.out.println("id_funcionario " + this.funcionarioSelecionado.getId_funcionario());
+		System.out.println("id_pessoa do funcionario" + this.funcionarioSelecionado.getId_pessoa());
+		System.out.println("data_nascimento " + this.funcionarioSelecionado.getData_nascimento());
+		//System.out.println("ultimo acesso" + this.funcionarioSelecionado.getUltimo_acesso());
+		
+		System.out.println("telefone id " + this.telefoneSelecionado.getId_telefone());
+		System.out.println("telefone ddd " + this.telefoneSelecionado.getDdd());
+		System.out.println("telefone numero " + this.telefoneSelecionado.getNumero_telefone());
+		System.out.println("telefone tipo " + this.telefoneSelecionado.getTipo_telefone());
+		
+		System.out.println("telefone2 id " + this.telefoneSelecionado2.getId_telefone());
+		System.out.println("telefone2 ddd " + this.telefoneSelecionado2.getDdd());
+		System.out.println("telefone2 numero " + this.telefoneSelecionado2.getNumero_telefone());
+		System.out.println("telefone2 tipo " + this.telefoneSelecionado2.getTipo_telefone());
+		
+		
+		
+		System.out.println("bairro " + this.enderecoSelecionado.getBairro());
+		System.out.println("cep " + this.enderecoSelecionado.getCep());
+		System.out.println("complemento " + this.enderecoSelecionado.getComplemento());
+		System.out.println("logradouro " + this.enderecoSelecionado.getLogradouro());
+		System.out.println("numero " + this.enderecoSelecionado.getNumero());
+		System.out.println("tipo " + this.enderecoSelecionado.getTipo_logradouro());
+		System.out.println("id_endereco " + this.enderecoSelecionado.getId_endereco());
+		
+		
+		System.out.println("bairro2 " + this.enderecoSelecionado2.getBairro());
+		System.out.println("cep2 " + this.enderecoSelecionado2.getCep());
+		System.out.println("complemento2 " + this.enderecoSelecionado2.getComplemento());
+		System.out.println("logradouro2 " + this.enderecoSelecionado2.getLogradouro());
+		System.out.println("numero2 " + this.enderecoSelecionado2.getNumero());
+		System.out.println("tipo2 " + this.enderecoSelecionado2.getTipo_logradouro());
+		System.out.println("id_endereco2 " + this.enderecoSelecionado2.getId_endereco());
+		
+		System.out.println("id_cidade " + this.cidadeSelecionada.getId_cidade());
+		System.out.println("nome_cidade " + this.cidadeSelecionada.getNome_cidade());
+		System.out.println("nome_estado " + this.cidadeSelecionada.getEstado().getNome_estado());
+		System.out.println("id_estado " + this.cidadeSelecionada.getEstado().getId_estado());
+		
+		
+		if (this.enderecoSelecionado.getId_endereco() == 0 && this.funcionarioSelecionado.getId_pessoa() == 0) {
+			
+				
+			this.funcionarioSelecionado.setUltimo_acesso(new Date());
+			this.funcionarioSelecionado.setSexo(this.getComboSexo());
+			
+			FuncionarioRN funcionarioRN = new FuncionarioRN();
+			funcionarioRN.salvar(this.funcionarioSelecionado);
+			
+			
+			EnderecoRN enderecoRN = new EnderecoRN();
+			this.enderecoSelecionado.setCidade(this.cidadeSelecionada); // add a cidade no endereco
+			this.enderecoSelecionado.setPessoa(this.funcionarioSelecionado);
+			enderecoRN.salvar(this.enderecoSelecionado);
+			
+			//if (!this.enderecoSelecionado2.getLogradouro().equals("")){
+				this.enderecoSelecionado2.setCidade(this.cidadeSelecionada2); // add a cidade no endereco
+				this.enderecoSelecionado2.setPessoa(this.funcionarioSelecionado);
+				this.enderecoSelecionado2.setCidade(this.cidadeSelecionada2); // add a cidade no endereco
+				enderecoRN.salvar(this.enderecoSelecionado2);
+				
+			TelefoneRN telefoneRN = new TelefoneRN();
+			this.telefoneSelecionado.setPessoa(this.funcionarioSelecionado);
+			this.telefoneSelecionado2.setPessoa(this.funcionarioSelecionado);
+			telefoneRN.salvar(this.telefoneSelecionado);
+			telefoneRN.salvar(this.telefoneSelecionado2);
+			
+			
+
+			FacesMessage faces = new FacesMessage("Funcionario cadastrado com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.listaEndereco = null;
+			this.listaTelefone = null;
+			this.lista = null;
+			this.listaEstado = null;
+			this.setFuncionarioSelecionado(null);
+			this.setEnderecoSelecionado(null);
+			this.setCidadeSelecionada(null);
+			this.setEnderecoSelecionado2(null);
+			this.setCidadeSelecionada2(null);
+			this.setTelefoneSelecionado(null);
+			this.setTelefoneSelecionado2(null);
+			this.setComboSexo("");
+			this.setCollapsedEndereco2(true);
+		} else {
+			alterar();
+		}
+	
+	}
+	
+
+
+	public void excluir() {
+
+		EnderecoRN enderecoRN = new EnderecoRN();
+		this.setListaEndereco(enderecoRN.listarPorPessoa(this.funcionarioSelecionado.getId_pessoa()));
+		
+		this.setEnderecoSelecionado(this.listaEndereco.get(0));
+		enderecoRN.excluir(this.enderecoSelecionado);
+		
+		this.setEnderecoSelecionado2(this.listaEndereco.get(1));
+		enderecoRN.excluir(this.enderecoSelecionado2);
+		
+		
+		TelefoneRN telefoneRN = new TelefoneRN();
+
+		this.setListaTelefone(telefoneRN.listarPorPessoa(this.funcionarioSelecionado.getId_pessoa()));
+		
+		this.setTelefoneSelecionado(this.listaTelefone.get(0));
+		this.setTelefoneSelecionado2(this.listaTelefone.get(1));
+		telefoneRN.excluir(this.telefoneSelecionado);
+		telefoneRN.excluir(this.telefoneSelecionado2);
+		
+		FacesMessage faces = new FacesMessage("Funcionario Excluido com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.listaEndereco = null;
+		this.listaTelefone = null;
+		this.lista = null;
+		this.listaEstado = null;
+		this.setFuncionarioSelecionado(null);
+		this.setEnderecoSelecionado(null);
+		this.setCidadeSelecionada(null);
+		this.setEnderecoSelecionado2(null);
+		this.setCidadeSelecionada2(null);
+		this.setTelefoneSelecionado(null);
+		this.setTelefoneSelecionado2(null);
+		this.setComboSexo("");
+		this.setCollapsedEndereco2(true);
+	}
+	
+	public void alterar() {
+		
+		
+		System.out.println("alterar "+this.funcionarioSelecionado.getSexo());
+		System.out.println("alterar "+this.funcionarioSelecionado.getEmail());
+		
+		
+		this.funcionarioSelecionado.setSexo(this.getComboSexo());
+		this.enderecoSelecionado.setCidade(this.cidadeSelecionada);
+		this.enderecoSelecionado.setPessoa(this.funcionarioSelecionado);
+		this.enderecoSelecionado2.setCidade(this.cidadeSelecionada2);
+		this.enderecoSelecionado2.setPessoa(this.funcionarioSelecionado);
+		
+		EnderecoRN enderecoRN = new EnderecoRN();
+		enderecoRN.alterar(this.enderecoSelecionado);
+		//enderecoRN.alterar(this.enderecoSelecionado2);
+		
+		this.telefoneSelecionado.setPessoa(this.funcionarioSelecionado);
+		this.telefoneSelecionado2.setPessoa(this.funcionarioSelecionado);
+		TelefoneRN telefoneRN = new TelefoneRN();
+		telefoneRN.alterar(this.telefoneSelecionado);
+		telefoneRN.alterar(this.telefoneSelecionado2);
+		
+		if (this.enderecoSelecionado2.getId_endereco().equals(0)) {
+			System.out.println("objeto contem algo e id 0.. tem q salvar ");
+		enderecoRN.salvar(this.enderecoSelecionado2);
+		}else{
+		System.out.println("objeto contem algo e id diferente de 0.. tem q alterar ");
+		enderecoRN.alterar(this.enderecoSelecionado2);
+		
+	}
+		
+		FacesMessage faces = new FacesMessage("Funcionario Alterado com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.listaEndereco = null;
+		this.listaTelefone = null;
+		this.lista = null;
+		this.listaEstado = null;
+		this.setFuncionarioSelecionado(null);
+		this.setEnderecoSelecionado(null);
+		this.setCidadeSelecionada(null);
+		this.setEnderecoSelecionado2(null);
+		this.setCidadeSelecionada2(null);
+		this.setTelefoneSelecionado(null);
+		this.setTelefoneSelecionado2(null);
+		this.setComboSexo("");
+		this.setCollapsedEndereco2(true);
+	}
+	
+//	
+//	public void buscarTitular() {
+//		System.out.println("dentro do buscartitular");
+//		FuncionarioRN funcionarioRN = new FuncionarioRN();
+//		Funcionario funcionarioTitularLocalizado = new Funcionario();
+//		
+//		funcionarioTitularLocalizado = funcionarioRN.pesquisarPorEmailCriteria(this.funcionarioTitularSelecionado.getEmail());
+//		
+//		if (funcionarioTitularLocalizado != null){
+//			this.funcionarioSelecionado.setTitular(funcionarioTitularLocalizado);
+//			this.setFuncionarioTitularSelecionado(null);
+//			funcionarioTitularLocalizado = null;
+//			
+//		}else{
+//			
+//			
+//			this.setFuncionarioSelecionado(null);
+//			this.setFuncionarioTitularSelecionado(null);
+//			funcionarioTitularLocalizado = null;
+//		}
+//
+//		
+//	}
+	
+
+
+
+	
+	public void setComboSexo(String comboSexo){
+		this.comboSexo = comboSexo;
+}
+	
+	
+public String getComboSexo(){
+	return comboSexo;
+}
+	
+
+public void populaCampos(){
+	
+	EnderecoRN enderecoRN = new EnderecoRN();
+	TelefoneRN telefoneRN = new TelefoneRN();
+
+	this.setListaTelefone(telefoneRN.listarPorPessoa(this.funcionarioSelecionado.getId_pessoa()));
+	
+	this.setTelefoneSelecionado(this.listaTelefone.get(0));
+	this.setTelefoneSelecionado2(this.listaTelefone.get(1));
+	
+	System.out.println("tel 1 da lista: "+this.listaTelefone.get(0).getNumero_telefone());	
+	System.out.println("tel 2 da lista: "+this.listaTelefone.get(1).getNumero_telefone());	
+	
+	System.out.println("tel 1 do obj: "+this.telefoneSelecionado.getNumero_telefone());	
+	System.out.println("tel 2 do obj: "+this.telefoneSelecionado2.getNumero_telefone());	
+	
+//	System.out.println("end 2: "+this.enderecoSelecionado2.getId_endereco());
+	
+	
+	this.setListaEndereco(enderecoRN.listarPorPessoa(this.funcionarioSelecionado.getId_pessoa()));
+	
+	this.setEnderecoSelecionado(this.listaEndereco.get(0));
+	this.setCidadeSelecionada(this.enderecoSelecionado.getCidade());
+	this.setComboSexo(this.enderecoSelecionado.getPessoa().getSexo());
+
+	//this.setEnderecoSelecionado2(this.listaEndereco.get(1));
+	//this.setCidadeSelecionada2(this.enderecoSelecionado2.getCidade());
+	//this.setComboSexo(this.enderecoSelecionado2.getPessoa().getSexo());
+	
+	if (this.listaEndereco.get(1).getId_endereco().equals(0)) {
+		this.setCollapsedEndereco2(true);
+		//this.setRequiredEndereco2(false);
+		System.out.println("dentro do if do popula: ");
+		//this.setEnderecoSelecionado2(null);
+		//this.setCidadeSelecionada2(null);
+		
+	}else {
+		System.out.println("dentro do else do popula: ");
+		this.setCollapsedEndereco2(false);
+		//this.setRequiredEndereco2(true);
+		this.setEnderecoSelecionado2(this.listaEndereco.get(1));
+		this.setCidadeSelecionada2(this.enderecoSelecionado2.getCidade());
+		this.setComboSexo(this.enderecoSelecionado2.getPessoa().getSexo());
+		
+	}
+	
+	//impressao pra teste---ok
+	System.out.println("endereco 1 da lista: "+this.listaEndereco.get(0).getLogradouro());	
+	//System.out.println("endereco 2 da lista: "+this.listaEndereco.get(1).getLogradouro());	
+	//System.out.println(" id endereco 2 da lista: "+this.listaEndereco.get(1).getId_endereco());
+	
+	System.out.println("endereco 1 do obj: "+this.enderecoSelecionado.getLogradouro());	
+	System.out.println("endereco 2 do obj: "+this.enderecoSelecionado2.getLogradouro());	
+	
+	
+	
+	}
+
+
+
+
+}

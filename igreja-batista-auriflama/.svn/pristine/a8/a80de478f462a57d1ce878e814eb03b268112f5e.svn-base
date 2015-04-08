@@ -1,0 +1,56 @@
+package com.toledo.salao.cliente;
+
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+
+
+public class ClienteRN {
+
+	private ClienteDao clienteDao;
+
+	public ClienteRN() {
+		this.clienteDao = DAOFactory.criaClienteDao();
+	}
+
+	public void salvar(Cliente e1) {
+		this.clienteDao.salvar(e1);
+		
+	}
+
+	public List<Cliente> listar() {
+		return this.clienteDao.listar();
+	}
+
+	public void excluir(Cliente cliente) {
+		this.clienteDao.excluir(cliente);
+		
+	}
+
+	public Cliente pesquisar(String string) {
+		return this.clienteDao.pesquisar(string);
+	}
+
+	public Cliente pesquisarPorEmail(String string) {
+		return this.clienteDao.pesquisarPorEmail(string);
+	}
+	
+	public void alterar(Cliente cliente) {
+	 this.clienteDao.alterar(cliente);
+		
+	}	
+	
+	public Cliente carregar(Integer id) {
+		return this.clienteDao.carregar(id);
+	}
+	
+	public Cliente pesquisarPorEmailCriteria(String string) {
+		Cliente cliente = this.clienteDao.pesquisarPorEmailCriteria(string);
+		return cliente;
+		//return this.clienteDao.pesquisarPorEmailCriteria(string);
+	}
+	
+	}
+

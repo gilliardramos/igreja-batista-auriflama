@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="pageTitle">Cliente</ui:define>
+		<ui:define name="pageHeader"></ui:define>
+		<ui:define name="body">
+		
+
+
+			<h:form id="edicao">
+
+				<p:panel id="panel" header="Cadastro de Cliente"
+					style="margin-bottom:10px;">
+
+					<p:messages id="messages" />
+
+					<h:panelGrid id="display" columns="2">
+
+						<h:outputLabel value="Nome: *" />
+
+						<p:inputText id="nomeCliente"
+							value="#{clienteBean.clienteSelecionado.nome_pessoa}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Você não tem nome?">
+						</p:inputText>
+
+						<h:outputLabel value="Sexo: *" />
+
+						<p:selectOneRadio id="sexo" value="#{clienteBean.comboSexo}">
+							<f:selectItem itemLabel="Feminino" itemValue="F" />
+							<f:selectItem itemLabel="Masculino" itemValue="M" />
+						</p:selectOneRadio>
+
+						<h:outputLabel value="Data de Nascimento: *" />
+
+						<p:calendar id="nascimentoCliente" pattern="dd/MM/yyyy"
+							locale="pt_BR" size="14" maxlength="50"
+							value="#{clienteBean.clienteSelecionado.data_nascimento}"
+							navigator="true">
+						</p:calendar>
+
+						<h:outputScript name="calendario_pt_BR.js" library="js" />
+						<br />
+						<h:outputLabel value="RG: *" />
+
+						<p:inputText id="rgCliente"
+							value="#{clienteBean.clienteSelecionado.rg}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="14">
+
+						</p:inputText>
+
+						<h:outputLabel value="CPF: *" />
+
+						<p:inputMask id="cpfCliente" size="14" mask="999.999.999-99"
+							requiredMessage="Campo obrigatório não preenchido"
+							value="#{clienteBean.clienteSelecionado.cpf}" required="true">
+							<!--   <f:validator validatorId="cpf" /> -->
+						</p:inputMask>
+
+						<h:outputLabel value="Email: *" />
+						<p:inputText id="emailCliente"
+							value="#{clienteBean.clienteSelecionado.email}"
+							onkeydown="this.value = this.value.toLowerCase();"
+							onkeyup="this.value = this.value.toLowerCase()" required="true"
+							requiredMessage="Campo obrigatório não preenchido">
+						</p:inputText>
+
+						<h:outputLabel value="Senha: *" />
+						
+						<p:inputText id="senhaCliente"
+							value="#{clienteBean.clienteSelecionado.senha}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+						</p:inputText>
+						
+						<h:outputLabel value="Ultimo Acesso:" />
+
+						<h:outputText value="#{clienteBean.clienteSelecionado.ultimo_acesso}"
+							rendered="#{not empty clienteBean.clienteSelecionado.ultimo_acesso}" >
+						<f:convertDateTime dateStyle="full"/>
+						</h:outputText>
+						
+						<h:inputText id="statusCliente"
+							value="#{clienteBean.clienteSelecionado.status_cliente}" />
+
+						<h:inputText id="idCliente"
+							value="#{clienteBean.clienteSelecionado.id_cliente}" />
+
+<!-- 						<h:inputHidden id="Cliente" -->
+<!-- 							value="#{clienteBean.clienteSelecionado}" converter="converterCliente" /> -->
+
+
+<!-- 						<h:inputHidden id="idPessoa" -->
+<!-- 							value="#{clienteBean.clienteSelecionado.id_pessoa}" /> -->
+
+					</h:panelGrid>
+
+					
+
+				</p:panel>
+				<br />
+<!-- 			</h:form> -->
+<!-- 			<br /> -->
+
+<!-- 			<h:form id="endereco"> -->
+
+				<p:panel id="panelEndereco" header="Endereço"
+					style="margin-bottom:10px;">
+
+					<h:outputLabel value="Cep: *" />
+
+						<p:inputText id="cep"
+							value="#{clienteBean.enderecoSelecionado.cep}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Bairro: *" />
+
+						<p:inputText id="bairro"
+							value="#{clienteBean.enderecoSelecionado.bairro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Complemento: *" />
+
+						<p:inputText id="complemento"
+							value="#{clienteBean.enderecoSelecionado.complemento}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Logradouro: *" />
+
+						<p:inputText id="logradouro"
+							value="#{clienteBean.enderecoSelecionado.logradouro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Número: *" />
+
+						<p:inputText id="numero"
+							value="#{clienteBean.enderecoSelecionado.numero}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Tipo: *" />
+
+						<p:inputText id="tipoLogradouro"
+							value="#{clienteBean.enderecoSelecionado.tipo_logradouro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Cidade: *" />
+
+						<p:inputText id="nomeCidade"
+							value="#{clienteBean.cidadeSelecionada.nome_cidade}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Cep_inicial: *" />
+
+						<p:inputText id="Cep_inicial"
+							value="#{clienteBean.cidadeSelecionada.cep_inicial}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>	
+						
+<!-- 					<h:outputLabel value="Cidade: *" /> -->
+
+<!-- 						<p:inputText id="nomeCidade" -->
+<!-- 							value="#{clienteBean.cidadeSelecionada.nome_cidade}" -->
+<!-- 							onkeydown="this.value = this.value.toUpperCase();" -->
+<!-- 							onkeyup="this.value = this.value.toUpperCase()" required="true" -->
+<!-- 							size="50" requiredMessage="Dado inválido"> -->
+<!-- 						</p:inputText>	 -->
+						
+					<h:outputText value="Estado: " />
+						<p:selectOneMenu id="Estado"
+							value="#{clienteBean.cidadeSelecionada.estado}"
+							converter="converterEstado" >
+							
+					
+
+							<f:selectItem itemLabel="Selecione o Estado" value="#{null}" />
+							<f:selectItems value="#{clienteBean.listaEstado}" var="est"
+								itemValue="#{est}" itemLabel="#{est.nome_estado}" />
+
+						</p:selectOneMenu>
+						
+					
+						<h:inputHidden id="idEndereco"
+							value="#{clienteBean.enderecoSelecionado.id_endereco}" />
+							
+<!-- 						<h:inputHidden id="Endereco" -->
+<!-- 							value="#{clienteBean.enderecoSelecionado}" /> -->
+							
+						<h:inputText id="idCidade"
+							value="#{clienteBean.enderecoSelecionado.cidade.id_cidade}"/>	
+
+						<h:inputHidden id="Cidade"
+							value="#{clienteBean.enderecoSelecionado.cidade}"  converter="converterCidade"/>	
+
+						
+<!-- 						<h:inputHidden id="idEstado" -->
+<!-- 							value="#{clienteBean.cidadeSelecionada.estado.id_estado}" />	 -->
+							
+<!-- 						<h:inputHidden id="idEstado" -->
+<!-- 							value="#{clienteBean.estadoSelecionado.id_estado}" />	 -->
+						
+					
+
+				</p:panel>
+				
+				<p:commandButton value="Salvar" action="#{clienteBean.salvar}"
+						 icon="ui-icon-disk"  update="edicao" >
+						 <f:ajax execute=":edicao"/>
+
+						 </p:commandButton>	 
+
+<!-- 				<p:commandButton value="Editar" action="#{clienteBean.editar}" -->
+<!-- 						 icon="ui-icon-disk"  update="edicao" > -->
+<!-- 						 <f:ajax execute=":edicao"/> -->
+
+<!-- 						 </p:commandButton>	  -->
+				
+				
+			</h:form>
+
+			
+			
+						 
+					
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

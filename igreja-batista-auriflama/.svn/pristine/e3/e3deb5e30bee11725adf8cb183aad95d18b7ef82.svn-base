@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="pageTitle">Empresa</ui:define>
+		<ui:define name="pageHeader"></ui:define>
+		<ui:define name="body">
+
+
+			<h:form id="listaempresa">
+
+
+				<p:dataTable id="tabela" value="#{empresaBean.lista}" var="empresa"
+					emptyMessage="Favor realizar o cadastro de sua Empresa!">
+
+					<f:facet name="header">Empresa</f:facet>
+
+					<p:column>
+
+
+						<b><h:outputText value="#{empresa.fantasia}" /> <br /> <h:outputText
+								value="#{empresa.razao}" /> <br /> <h:outputText
+								value="CNPJ: #{empresa.cnpj}" /> <br /> <h:outputText
+								value="IE: #{empresa.ie}" /> <br /> <h:outputText
+								value="#{empresa.endereco}" /> <h:outputText
+								value="    #{empresa.bairro}" /> <h:outputText
+								value="    #{empresa.cidade}" /> <h:outputText
+								value=" -  #{empresa.uf}" /> <br /> <h:outputText
+								value="CEP: #{empresa.cep}" /> <br /> <h:outputText
+								value="FONE: #{empresa.ddd} #{empresa.fone1} #{empresa.fone2}" />
+							<br /> <h:outputText value="E-mail: #{empresa.email}" /> <br />
+
+							<h:outputText value=" #{empresa.dt_cadastro}"
+								rendered="#{not empty empresa.dt_cadastro}">
+								<f:convertDateTime dateStyle="full" />
+							</h:outputText> </b>
+
+					</p:column>
+
+					<p:column styleClass="coluna-tabela-centralizada">
+						<h:commandLink action="/Empresa.xhtml">
+							<h:graphicImage library="imagens" name="editar.gif"
+								style=" width : 28px;" />
+							<f:setPropertyActionListener
+								target="#{empresaBean.empresaSelecionada}" value="#{empresa}" />
+						</h:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+				<p:commandButton value="Add Empresa" action="/Empresa.xhtml"
+					ajax="false" icon="ui-icon-star" />
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

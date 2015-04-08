@@ -1,0 +1,23 @@
+package com.toledo.salao.beleza;
+
+import org.hibernate.Session;
+
+import com.toledo.salao.util.HibernateUtil;
+
+public class Conecta {
+	
+	public static void main(String[] args) {
+		Session sessao = null;
+		try {
+			sessao = HibernateUtil.getSession().openSession();
+			System.out.println("Finalmente Conectou!");
+		} finally{
+			sessao.close();
+			System.out.println("Fechou Conexao");
+			
+			
+			
+		}
+	}
+
+}

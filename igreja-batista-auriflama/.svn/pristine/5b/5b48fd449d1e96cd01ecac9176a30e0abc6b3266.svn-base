@@ -1,0 +1,135 @@
+package com.toledo.salao.telefone;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.FetchMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+import com.toledo.salao.endereco.Endereco;
+
+
+
+public class TelefoneDaoHibernate implements TelefoneDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Telefone telefone) {
+		this.sessao.save(telefone);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	//###o metodo abaixo só vai ter utilidade caso queira listar endereços por cidade
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Telefone> listar() {
+		List<Telefone> telefones = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			telefones = (ArrayList<Telefone>)sessao
+				.createCriteria(Telefone.class)
+					.setFetchMode("pessoa", FetchMode.JOIN)
+				    //.setFetchMode("pessoa", FetchMode.JOIN)
+				.list();
+			
+			
+			//teste:
+			
+			
+			
+			/*
+			 * Exemplo de Criteria para obter a telefone ja com o objeto esta a que pertence, 
+			 * mas trazendo somente a telefone do id_telefone = 123, ou o que vc's passar por parametro
+			 */
+			/*telefones = (ArrayList<Telefone>)sessao.createCriteria(Telefone.class)
+					.setFetchMode("estado", FetchMode.JOIN)
+					.add(Restrictions.eq("id_telefone", 123))
+					.list();*/
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as telefones cadastradas. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return telefones;
+	}
+
+	@Override
+	public void excluir(Telefone telefone) {
+		this.sessao.delete(telefone);
+		
+	}
+
+	@Override
+	public Telefone pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from telefone c where c.nome_telefone like :nome_telefone");
+		consultaNome.setString("nome_telefone", "%" + string + "%");
+		return (Telefone) consultaNome.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Telefone> listarPorPessoa(Integer idpessoa) {
+		List<Telefone> telefones = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			telefones = (ArrayList<Telefone>)sessao
+				.createCriteria(Telefone.class)
+				//.setFetchMode("pessoa", FetchMode.JOIN)
+				 //.add(Restrictions.eq("id_pessoa", idpessoa))
+				.add(Restrictions.eq("pessoa.id_pessoa", idpessoa))
+					//.setFetchMode("cidade", FetchMode.JOIN)
+				    //.setFetchMode("pessoa", FetchMode.JOIN)
+				.list();
+			
+			
+			//teste:
+			
+			
+			
+			/*
+			 * Exemplo de Criteria para obter a endereco ja com o objeto esta a que pertence, 
+			 * mas trazendo somente a endereco do id_endereco = 123, ou o que vc's passar por parametro
+			 */
+//			enderecos = (ArrayList<Endereco>)sessao.createCriteria(Endereco.class)
+//					//.setFetchMode("pessoa", FetchMode.JOIN)
+//					.add(Restrictions.idEq(idpessoa)
+//					.list();
+//			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as enderecos cadastradas. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return telefones;
+	}
+
+
+	
+	@Override
+	public void alterar(Telefone telefone) {
+		this.sessao.update(telefone);
+	}
+	
+	
+/*@Override
+public Telefone carregar(Integer idtelefone){
+	return (Telefone) this.sessao.get(Telefone.class, idtelefone);
+}*/
+}

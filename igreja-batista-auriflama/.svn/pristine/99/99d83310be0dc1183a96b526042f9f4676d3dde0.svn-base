@@ -1,0 +1,145 @@
+package com.toledo.salao.servico;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import com.toledo.salao.servico.Servico;
+import com.toledo.salao.servico.ServicoDao;
+
+public class ServicoDaoHibernate implements ServicoDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Servico servico) {
+		this.sessao.save(servico);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Servico> listar() {
+		Criteria lista = sessao.createCriteria(Servico.class);
+		return lista.list();
+	}
+
+	@Override
+	public void excluir(Servico servico) {
+		this.sessao.delete(servico);
+
+	}
+
+	/*@Override
+	public Servico pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from servico e where e.nome_servico like :nome_servico");
+		consultaNome.setString("nome_servico", "%" + string + "%");
+		return (Servico) consultaNome.uniqueResult();
+	}
+*/
+	@Override
+	public void alterar(Servico servico) {
+		this.sessao.update(servico);
+	}
+	
+	/*@Override
+	public Servico buscarPorId(Integer id) {
+		  if (id == null) {  
+	            return null;  
+	        } else {  
+	            sessao = this.getSessao();  
+	            Servico servico = ( Servico )  
+	            sessao.get( ServicoDao.class, id );  
+	            sessao.getTransaction().commit();  
+	            sessao.close();  
+	            return servico;  
+	        }  
+	}*/
+
+
+	@Override
+	public Servico buscarPorId(Integer id) {
+		Query consultaId = this.sessao
+				.createQuery("from Servico as e where e.id_servico = :id_servico");
+		consultaId.setInteger("id_servico", id);
+		return (Servico) consultaId.uniqueResult();
+	}
+	
+	
+/*	@Override
+	public Servico buscarPorId(Integer id) {
+		
+		System.out.print("dentro do dao hibernate  "+id);
+		Query query = sessao.createQuery("from Servico where id_servico = :id_servico ");
+		query.setParameter("id_servico", id);
+		List<Servico> list = query.list();
+		System.out.print("dentro do dao hibernate e na lista  "+list.get(0).toString());
+		//return list;
+		Servico servico = new Servico();
+		return servico;
+
+	}*/
+	
+	@Override
+	public Servico pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from Servico c where c.id_servico like :id_Servico");
+		consultaNome.setString("id_servico", "%" + string + "%");
+		return (Servico) consultaNome.uniqueResult();
+	}
+	
+	/*@SuppressWarnings("unchecked")
+	@Override
+	public Servico buscar(Integer idServico) {
+		List<Agenda> agendas = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			
+			
+			
+			 * Exemplo de Criteria para obter a agenda ja com o objeto esta a que pertence, 
+			 * mas trazendo somente a agenda do id_agenda = 123, ou o que vc's passar por parametro
+			 
+			agendas = (ArrayList<Servico>)sessao.createCriteria(Servico.class)
+					.add(Restrictions.eq("id_servico", idServico))
+					.list();
+			
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as agendas cadastradas. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		//return agendas.get(0);
+		Servico servico = new Servico();
+		servico = ervicos.get(0);
+		return servico;
+	}
+*/
+	
+	@Override  
+	   public Servico carregar(Integer servico) {  
+	      // return (Servico) this.sessao.get(Servico.class, servico);
+		String string = Integer.toString(servico);
+		Query consultaNome = this.sessao
+				.createQuery("from Servico c where c.id_servico like :id_servico");
+		consultaNome.setString("id_servico", "%" + string + "%");
+		return (Servico) consultaNome.uniqueResult();
+	   }  
+
+}
+

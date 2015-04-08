@@ -1,0 +1,80 @@
+package com.toledo.salao.pessoa;
+
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+@ManagedBean(name = "pessoaBean")
+@RequestScoped
+public class PessoaBean {
+
+	private Pessoa pessoaSelecionado = new Pessoa();
+	private List<Pessoa> lista = null;
+
+	public void salvar() {
+		if (this.pessoaSelecionado.getId_pessoa() == 0) {
+			PessoaRN pessoaRN = new PessoaRN();
+			//pessoaSelecionado.setDataCadastro(new Date());
+			pessoaRN.salvar(pessoaSelecionado);
+			FacesMessage faces = new FacesMessage(
+					"Pessoa cadastrado com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+			this.setPessoaSelecionado(null);
+		} else {
+			alterar();
+		}
+	}
+
+	public Pessoa getPessoaSelecionado() {
+		return pessoaSelecionado;
+	}
+
+	public void setPessoaSelecionado(Pessoa pessoaSelecionado) {
+		this.pessoaSelecionado = pessoaSelecionado;
+	}
+
+	public List<Pessoa> getLista() {
+		PessoaRN pessoaRN = new PessoaRN();
+		if (lista == null) {
+			lista = pessoaRN.listar();
+
+		}
+		return lista;
+	}
+
+	/*public Pessoa buscarPorId() {
+		PessoaRN pessoaRN = new PessoaRN();
+		if (this.pessoaSelecionado.getId_pessoa() == null) {
+			return null;
+		}else{
+			
+		pessoaRN.buscarPorId(this.pessoaSelecionado.getId_pessoa());
+
+		return pessoaBuscado;
+	}
+	}*/
+	public void excluir() {
+		PessoaRN pessoaRN = new PessoaRN();
+		pessoaRN.excluir(this.pessoaSelecionado);
+		FacesMessage faces = new FacesMessage("Pessoa Excluido com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setPessoaSelecionado(null);
+	}
+
+	public void alterar() {
+		PessoaRN pessoaRN = new PessoaRN();
+		pessoaRN.alterar(this.pessoaSelecionado);
+		FacesMessage faces = new FacesMessage("Pessoa Alterado com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setPessoaSelecionado(null);
+	}
+}

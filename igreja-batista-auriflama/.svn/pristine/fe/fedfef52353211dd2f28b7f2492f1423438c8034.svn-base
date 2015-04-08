@@ -1,0 +1,24 @@
+package com.toledo.salao.funcao;
+
+import java.util.List;
+
+import com.toledo.salao.funcao.Funcao;
+
+public interface FuncaoDao {
+
+	public void salvar(Funcao funcao);
+
+	public List<Funcao> listar();
+
+	public void excluir(Funcao funcao);
+
+	public Funcao pesquisar(String string);
+
+	public void alterar(Funcao funcao);
+
+	public Funcao buscarPorId(Integer integer);
+	
+	public Funcao carregar(Integer idFuncao);
+
+
+}

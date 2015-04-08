@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="pageTitle">Funcao</ui:define>
+		<ui:define name="pageHeader"></ui:define>
+		<ui:define name="body">
+
+			<h:form id="edicao">
+
+				<p:panel id="panel" header="Cadastro de Funcao"
+					style="margin-bottom:10px;">
+
+					<p:messages id="messages" />
+
+					<h:panelGrid id="display" columns="2">
+						<h:outputLabel value="Nome: *" />
+						<p:inputText id="nomeFuncao"
+							value="#{funcaoBean.funcaoSelecionada.nome_funcao}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+					
+					<h:outputText value="#{funcaoBean.funcaoSelecionada.dataCadastro}"
+							rendered="#{not empty funcaoBean.funcaoSelecionada.dataCadastro}" >
+						<f:convertDateTime dateStyle="full"/>
+						</h:outputText>
+					
+						<h:inputHidden id="idFuncao"
+							value="#{funcaoBean.funcaoSelecionada.id_funcao}" />
+					</h:panelGrid>
+
+					<p:commandButton value="Salvar" action="#{funcaoBean.salvar}"
+						ajax="false" icon="ui-icon-disk" />
+
+				</p:panel>
+
+				<br />
+
+			</h:form>
+			<br />
+
+			<h:form id="listafuncao">
+				<p:dataTable id="tabelafuncao" value="#{funcaoBean.lista}" var="funcao"
+					rendered="#{not empty funcaoBean.lista}" sortMode="multiple"
+					rows="10" paginator="true">
+					<f:facet name="header">Listagem de Funcaos</f:facet>
+
+					<p:column sortBy="#{funcao.nome_funcao}" headerText="Nome">
+						<h:outputText value="#{funcao.nome_funcao}" />
+					</p:column>
+
+
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Editar">
+
+						<h:commandLink
+							onclick="if (!confirm('Deseja realmente Editar o Funcao: #{funcao.nome_funcao} ?')) return false;">
+							<h:graphicImage library="imagens" name="editar.gif" />
+							<f:setPropertyActionListener
+								target="#{funcaoBean.funcaoSelecionada}" value="#{funcao}" />
+						</h:commandLink>
+					</p:column>
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Excluir">
+						<h:commandLink action="#{funcaoBean.excluir}"
+							onclick="if (!confirm('Deseja realmente excluir o Funcao #{funcao.nome_funcao}?')) return false;">
+							<h:graphicImage library="imagens" name="excluir.gif" />
+							<f:setPropertyActionListener
+								target="#{funcaoBean.funcaoSelecionada}" value="#{funcao}" />
+						</h:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

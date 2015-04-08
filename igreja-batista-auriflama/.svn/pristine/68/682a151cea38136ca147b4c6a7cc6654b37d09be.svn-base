@@ -1,0 +1,93 @@
+package com.toledo.salao.agenda;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.FetchMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+
+
+public class AgendaDaoHibernate implements AgendaDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Agenda agenda) {
+		this.sessao.save(agenda);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Agenda> listar() {
+		List<Agenda> agendamentos = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			agendamentos = (ArrayList<Agenda>)sessao
+				.createCriteria(Agenda.class)
+					.setFetchMode("servico", FetchMode.JOIN)
+					.setFetchMode("fechamento", FetchMode.JOIN)
+				    //.setFetchMode("pessoa", FetchMode.JOIN)
+				.list();
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao listar os agendamentos cadastrados. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return agendamentos;
+	}
+
+	@Override
+	public void excluir(Agenda agenda) {
+		this.sessao.delete(agenda);
+		
+	}
+
+	@Override
+	public Agenda pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from agenda c where c.nome_agenda like :nome_agenda");
+		consultaNome.setString("nome_agenda", "%" + string + "%");
+		return (Agenda) consultaNome.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Agenda> pesquisarPorPessoa(Integer idPessoa) {
+		List<Agenda> agendamentos = new ArrayList<>();		
+		try {
+		agendamentos = (ArrayList<Agenda>)sessao.createCriteria(Agenda.class)
+				.setFetchMode("pessoa", FetchMode.JOIN)
+				.add(Restrictions.eq("id_pessoa", idPessoa))
+				.list();
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao listar os agendamentod cadastrados. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		return agendamentos;
+	}
+	
+	@Override
+	public void alterar(Agenda agenda) {
+		this.sessao.update(agenda);
+	}
+
+}
+

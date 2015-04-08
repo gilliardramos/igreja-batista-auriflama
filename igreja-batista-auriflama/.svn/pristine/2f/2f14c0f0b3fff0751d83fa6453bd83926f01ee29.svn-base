@@ -1,0 +1,22 @@
+package com.toledo.salao.endereco;
+
+import java.util.List;
+
+public interface EnderecoDao {
+
+	public void salvar(Endereco endereco);
+
+	public List<Endereco> listar();
+
+	public void excluir(Endereco endereco);
+
+	public Endereco pesquisar(String string);
+	
+	public Endereco pesquisarPorPessoa(Integer idPessoa);
+
+	public void alterar(Endereco endereco);
+	
+	public Endereco carregar(Integer idEndereco);
+
+	public List<Endereco> listarPorPessoa(Integer idPessoa);
+}

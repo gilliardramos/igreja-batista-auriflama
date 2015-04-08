@@ -1,0 +1,100 @@
+package com.toledo.salao.historico;
+
+
+
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "historico")
+public class Historico {
+
+	@Id
+	@GeneratedValue
+	private Integer id_historico;
+	
+	private  String observacao;
+	private Date datahistorico;
+	
+	//Cria um objeto Historico public
+	public Historico(){
+		
+	}
+	
+	public Historico(String observacao, Date datahistorico) {
+		super();
+		this.observacao = observacao;
+		this.datahistorico = datahistorico;
+			}
+
+	public Integer getId_historico() {
+		return id_historico;
+	}
+
+	public void setId_historico(Integer id_historico) {
+		this.id_historico = id_historico;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public Date getDatahistorico() {
+		return datahistorico;
+	}
+
+	public void setDatahistorico(Date datahistorico) {
+		this.datahistorico = datahistorico;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((datahistorico == null) ? 0 : datahistorico.hashCode());
+		result = prime * result
+				+ ((id_historico == null) ? 0 : id_historico.hashCode());
+		result = prime * result
+				+ ((observacao == null) ? 0 : observacao.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Historico other = (Historico) obj;
+		if (datahistorico == null) {
+			if (other.datahistorico != null)
+				return false;
+		} else if (!datahistorico.equals(other.datahistorico))
+			return false;
+		if (id_historico == null) {
+			if (other.id_historico != null)
+				return false;
+		} else if (!id_historico.equals(other.id_historico))
+			return false;
+		if (observacao == null) {
+			if (other.observacao != null)
+				return false;
+		} else if (!observacao.equals(other.observacao))
+			return false;
+		return true;
+	}	
+	
+
+
+}

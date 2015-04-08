@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="pageTitle">Servico</ui:define>
+		<ui:define name="pageHeader"></ui:define>
+		<ui:define name="body">
+
+			<h:form id="edicao">
+
+				<p:panel id="panel" header="Cadastro de Servico"
+					style="margin-bottom:10px;">
+
+					<p:messages id="messages" />
+
+					<h:panelGrid id="display" columns="2">
+						<h:outputLabel value="Nome: *" />
+						<p:inputText id="nomeServico"
+							value="#{servicoBean.servicoSelecionado.nome_servico}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+						
+						<h:outputLabel value="Preço: *" />
+						<p:inputText id="precoServico"
+							value="#{servicoBean.servicoSelecionado.preco_servico}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+						
+						
+						<h:outputLabel value="Duração média: *" />
+						<p:inputText id="duracaoServico" 
+							value="#{servicoBean.duracao_media}">
+							<!-- 							<f:validateLength minimum="2" /> -->
+						</p:inputText>
+						
+						<p:slider for="duracaoServico" step="1" />  
+						
+						<h:outputLabel value="Data de cadastro: *" />
+						<h:outputText id="dataCadastroServico" value="#{servicoBean.servicoSelecionado.dataCadastro}"
+						rendered="#{not empty servicoBean.servicoSelecionado.dataCadastro}">
+						<f:convertDateTime dateStyle="full"/>
+						</h:outputText>
+							
+						
+						<h:outputLabel value="Função: " />
+						<p:selectOneMenu id="idFuncao" value="#{servicoBean.servicoSelecionado.funcao}" converter="converterFuncao">
+
+							<f:selectItem itemLabel="Selecione a Função" value="#{null}" />
+							<f:selectItems value="#{funcaoBean.lista}" var="func" itemValue="#{func}" itemLabel="#{func.nome_funcao}" />
+
+						</p:selectOneMenu>
+						
+<!-- 						<h:outputScript name="calendario_pt_BR.js" library="js" /> -->
+						
+						
+						
+						
+						
+
+						
+						
+						
+						<h:inputHidden id="idServico"
+							value="#{servicoBean.servicoSelecionado.id_servico}" />
+					</h:panelGrid>
+
+					<p:commandButton value="Salvar" action="#{servicoBean.salvar}"
+						 icon="ui-icon-disk" update="edicao , :lista" />
+
+				</p:panel>
+
+				<br />
+
+			</h:form>
+			<br />
+
+			<h:form id="lista">
+				<p:dataTable id="tabela" value="#{servicoBean.lista}" var="servico"
+					rendered="#{not empty servicoBean.lista}"
+					sortMode="multiple" rows="10" paginator="true">
+					<f:facet name="header">Listagem de Servicos</f:facet>
+				
+					<p:column sortBy="#{servico.nome_servico}"
+					filterBy="#{servico.nome_servico}" headerText="Nome">
+						<h:outputText value="#{servico.nome_servico}" />
+					</p:column>
+
+					<p:column styleClass="coluna-tabela-centralizada"
+						sortBy="#{servico.funcao.nome_funcao}" headerText="Função">
+						<h:outputText value="#{servico.funcao.nome_funcao}" />
+					</p:column>
+					
+					
+
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Editar">
+
+						<h:commandLink action="#{servicoBean.populacampos}"
+							onclick="if (!confirm('Deseja realmente Editar a Servico: #{servico.nome_servico} ?')) return false;"
+							>
+							<h:graphicImage library="imagens" name="editar.gif" />
+							<f:setPropertyActionListener
+								target="#{servicoBean.servicoSelecionado}" value="#{servico}" />
+								
+						</h:commandLink>
+					</p:column>
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Excluir">
+						<h:commandLink action="#{servicoBean.excluir}"
+							onclick="if (!confirm('Deseja realmente excluir a Servico #{servico.nome_servico}?')) return false;">
+							<h:graphicImage library="imagens" name="excluir.gif" />
+							<f:setPropertyActionListener
+								target="#{servicoBean.servicoSelecionado}" value="#{servico}" />
+						</h:commandLink>
+					</p:column>
+      
+
+
+				</p:dataTable>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

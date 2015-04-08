@@ -1,0 +1,28 @@
+package com.toledo.salao.funcionario;
+
+import java.util.List;
+
+import com.toledo.salao.servico.Servico;
+
+public interface FuncionarioDao {
+
+	public void salvar(Funcionario funcionario);
+
+	public List<Funcionario> listar();
+
+	public void excluir(Funcionario funcionario);
+
+	public Funcionario pesquisar(String string);
+	
+	public Funcionario pesquisarPorEmail(String string);
+
+	public void alterar(Funcionario funcionario);
+	
+	//public Funcionario carregar(Integer idFuncionario);
+	
+	public Funcionario pesquisarPorEmailCriteria(String string);
+	
+	public List<Funcionario> listarPorServico(Servico servico);
+	
+
+}

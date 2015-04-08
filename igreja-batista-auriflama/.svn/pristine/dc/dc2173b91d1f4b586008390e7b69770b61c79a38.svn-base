@@ -1,0 +1,21 @@
+package com.toledo.salao.telefone;
+
+import java.util.List;
+
+public interface TelefoneDao {
+
+	public void salvar(Telefone telefone);
+
+	public List<Telefone> listar();
+
+	public void excluir(Telefone telefone);
+
+	public Telefone pesquisar(String string);
+	
+	public List<Telefone> listarPorPessoa(Integer idPessoa);
+
+	public void alterar(Telefone telefone);
+	
+	//public Telefone carregar(Integer idTelefone); não esta sendo usado.. mas talvez use pra pesquisar por id
+
+}

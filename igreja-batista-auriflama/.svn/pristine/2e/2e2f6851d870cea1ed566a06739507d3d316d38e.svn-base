@@ -1,0 +1,29 @@
+package com.toledo.salao.cliente;
+
+public class TesteCliente {
+
+	public TesteCliente() {
+		// TODO Auto-generated constructor stub
+		
+	}
+	
+	
+	
+	public static void main(String[] args) throws Exception {
+		ClienteRN clienteRN = new ClienteRN();
+		Cliente clienteTitularLocalizado = new Cliente();
+		Cliente clienteTitularSelecionado = new Cliente();
+		Cliente clienteSelecionado = new Cliente();
+		
+		clienteTitularLocalizado = clienteRN.pesquisarPorEmail("");
+		
+		
+		 if (clienteTitularLocalizado.getTitular() == null) {
+			 clienteSelecionado.setTitular(null);
+		 } else {
+			 clienteSelecionado.setTitular(clienteTitularLocalizado);
+		 }
+		 System.out.println(clienteTitularLocalizado);
+	}
+
+}

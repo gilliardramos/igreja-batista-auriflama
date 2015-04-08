@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="pageTitle">Funcionario</ui:define>
+		<ui:define name="pageHeader"></ui:define>
+		<ui:define name="body">
+		
+
+
+			<h:form id="edicao">
+
+				<p:panel id="panel" header="Cadastro de Funcionario"
+					style="margin-bottom:10px;">
+
+					<p:messages id="messages" />
+
+					<h:panelGrid id="display" columns="2">
+
+						<h:outputLabel value="Nome: *" />
+
+						<p:inputText id="nomeFuncionario"
+							value="#{funcionarioBean.funcionarioSelecionado.nome_pessoa}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Você não tem nome?">
+						</p:inputText>
+
+						<h:outputLabel value="Sexo: *" />
+
+						<p:selectOneRadio id="sexo" value="#{funcionarioBean.comboSexo}">
+							<f:selectItem itemLabel="Feminino" itemValue="F" />
+							<f:selectItem itemLabel="Masculino" itemValue="M" />
+						</p:selectOneRadio>
+
+						<h:outputLabel value="Data de Nascimento: *" />
+
+						<p:calendar id="nascimentoFuncionario" pattern="dd/MM/yyyy"
+							locale="pt_BR" size="14" maxlength="50"
+							value="#{funcionarioBean.funcionarioSelecionado.data_nascimento}"
+							navigator="true">
+						</p:calendar>
+
+						<h:outputScript name="calendario_pt_BR.js" library="js" />
+						<br />
+						<h:outputLabel value="RG: *" />
+
+						<p:inputText id="rgFuncionario"
+							value="#{funcionarioBean.funcionarioSelecionado.rg}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="14">
+
+						</p:inputText>
+
+						<h:outputLabel value="CPF: *" />
+
+						<p:inputMask id="cpfFuncionario" size="14" mask="999.999.999-99"
+							requiredMessage="Campo obrigatório não preenchido"
+							value="#{funcionarioBean.funcionarioSelecionado.cpf}" required="true">
+							<!--   <f:validator validatorId="cpf" /> -->
+						</p:inputMask>
+
+						<h:outputLabel value="Email: *" />
+						<p:inputText id="emailFuncionario"
+							value="#{funcionarioBean.funcionarioSelecionado.email}"
+							onkeydown="this.value = this.value.toLowerCase();"
+							onkeyup="this.value = this.value.toLowerCase()" required="true"
+							requiredMessage="Campo obrigatório não preenchido">
+						</p:inputText>
+
+						<h:outputLabel value="Senha: *" />
+						
+						<p:inputText id="senhaFuncionario"
+							value="#{funcionarioBean.funcionarioSelecionado.senha}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true">
+						</p:inputText>
+						
+						<h:outputLabel value="Ultimo Acesso:" />
+
+						<h:outputText value="#{funcionarioBean.funcionarioSelecionado.ultimo_acesso}"
+							rendered="#{not empty funcionarioBean.funcionarioSelecionado.ultimo_acesso}" >
+						<f:convertDateTime dateStyle="full"/>
+						</h:outputText>
+						
+						<h:inputText id="nivelFuncionario"
+							value="#{funcionarioBean.funcionarioSelecionado.nivel}" />
+							
+						<h:outputLabel value="Função: " />
+						<p:selectOneMenu id="idFuncao" value="#{funcionarioBean.funcionarioSelecionado.funcao}" converter="converterFuncao">
+
+							<f:selectItem itemLabel="Selecione a Função" value="#{null}" />
+							<f:selectItems value="#{funcaoBean.lista}" var="func" itemValue="#{func}" itemLabel="#{func.nome_funcao}" />
+
+						</p:selectOneMenu>
+							
+
+<!-- 						<h:inputHidden id="idFuncionario" -->
+<!-- 							value="#{funcionarioBean.funcionarioSelecionado.id_funcionario}" /> -->
+
+						<h:inputHidden id="idPessoa"
+							value="#{funcionarioBean.funcionarioSelecionado.id_pessoa}" />
+
+					</h:panelGrid>
+
+					
+
+				</p:panel>
+				<br />
+<!-- 			</h:form> -->
+<!-- 			<br /> -->
+
+<!-- 			<h:form id="endereco"> -->
+
+<p:panel id="panelTelefone" header="Telefone"
+					style="margin-bottom:10px;">
+
+					<h:outputLabel value="Tipo de Telefone: *" />
+
+						<p:inputText id="tipo_telefone"
+							value="#{funcionarioBean.telefoneSelecionado.tipo_telefone}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="DDD: *" />
+
+						<p:inputText id="ddd_telefone"
+							value="#{funcionarioBean.telefoneSelecionado.ddd}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>	
+						
+						<h:outputLabel value="Número: *" />
+
+						<p:inputText id="numero_telefone"
+							value="#{funcionarioBean.telefoneSelecionado.numero_telefone}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+						<h:inputHidden id="idTelefone"
+							value="#{funcionarioBean.telefoneSelecionado.id_telefone}" />
+</p:panel>						
+
+
+<p:panel id="panelTelefone2" header="Telefone Celular"
+					style="margin-bottom:10px;">
+
+					<h:outputLabel value="Tipo de Telefone: *" />
+
+						<p:inputText id="tipo_telefone2"
+							value="#{funcionarioBean.telefoneSelecionado2.tipo_telefone}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="DDD: *" />
+
+						<p:inputText id="ddd_telefone2"
+							value="#{funcionarioBean.telefoneSelecionado2.ddd}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>	
+						
+						<h:outputLabel value="Número: *" />
+
+						<p:inputText id="numero_telefone2"
+							value="#{funcionarioBean.telefoneSelecionado2.numero_telefone}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+						<h:inputHidden id="idTelefone2"
+							value="#{funcionarioBean.telefoneSelecionado2.id_telefone}" />
+</p:panel>						
+
+
+
+				<p:panel id="panelEndereco" header="Endereço"
+					style="margin-bottom:10px;">
+
+					<h:outputLabel value="Cep: *" />
+
+						<p:inputText id="cep"
+							value="#{funcionarioBean.enderecoSelecionado.cep}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Bairro: *" />
+
+						<p:inputText id="bairro"
+							value="#{funcionarioBean.enderecoSelecionado.bairro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Complemento: *" />
+
+						<p:inputText id="complemento"
+							value="#{funcionarioBean.enderecoSelecionado.complemento}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Logradouro: *" />
+
+						<p:inputText id="logradouro"
+							value="#{funcionarioBean.enderecoSelecionado.logradouro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Número: *" />
+
+						<p:inputText id="numero"
+							value="#{funcionarioBean.enderecoSelecionado.numero}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Tipo: *" />
+
+						<p:inputText id="tipoLogradouro"
+							value="#{funcionarioBean.enderecoSelecionado.tipo_logradouro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Cidade: *" />
+
+						<p:inputText id="nomeCidade"
+							value="#{funcionarioBean.cidadeSelecionada.nome_cidade}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Cep_inicial: *" />
+
+						<p:inputText id="Cep_inicial"
+							value="#{funcionarioBean.cidadeSelecionada.cep_inicial}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>	
+						
+<!-- 					<h:outputLabel value="Cidade: *" /> -->
+
+<!-- 						<p:inputText id="nomeCidade" -->
+<!-- 							value="#{funcionarioBean.cidadeSelecionada.nome_cidade}" -->
+<!-- 							onkeydown="this.value = this.value.toUpperCase();" -->
+<!-- 							onkeyup="this.value = this.value.toUpperCase()" required="true" -->
+<!-- 							size="50" requiredMessage="Dado inválido"> -->
+<!-- 						</p:inputText>	 -->
+						
+					<h:outputText value="Estado: " />
+						<p:selectOneMenu id="Estado"
+							value="#{funcionarioBean.cidadeSelecionada.estado}"
+							converter="converterEstado" required="true" requiredMessage="Dado inválido">>
+							
+					
+
+							<f:selectItem itemLabel="Selecione o Estado" value="#{null}" />
+							<f:selectItems value="#{funcionarioBean.listaEstado}" var="est"
+								itemValue="#{est}" itemLabel="#{est.nome_estado}" />
+
+						</p:selectOneMenu>
+						
+					
+						<h:inputHidden id="idEndereco"
+							value="#{funcionarioBean.enderecoSelecionado.id_endereco}" />
+							
+<!-- 						<h:inputHidden id="idCidade" -->
+<!-- 							value="#{funcionarioBean.cidadeSelecionada.id_cidade}" />	 -->
+						
+<!-- 						<h:inputHidden id="idEstado" -->
+<!-- 							value="#{funcionarioBean.cidadeSelecionada.estado.id_estado}" />	 -->
+					
+
+				
+
+				</p:panel>
+				
+		
+<p:panel id="panelEndereco2" header="Segundo Endereço" toggleable="true" toggleOrientation="horizontal" collapsed="#{funcionarioBean.collapsedEndereco2}"
+					style="margin-bottom:10px;" >
+
+
+
+					<h:outputLabel value="Cep: *" />
+
+						<p:inputText id="cep2"
+							value="#{funcionarioBean.enderecoSelecionado2.cep}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" 
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Bairro: *" />
+
+						<p:inputText id="bairro2"
+							value="#{funcionarioBean.enderecoSelecionado2.bairro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" 
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Complemento: *" />
+
+						<p:inputText id="complemento2"
+							value="#{funcionarioBean.enderecoSelecionado2.complemento}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" 
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Logradouro: *" />
+
+						<p:inputText id="logradouro2"
+							value="#{funcionarioBean.enderecoSelecionado2.logradouro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" 
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Número: *" />
+
+						<p:inputText id="numero2"
+							value="#{funcionarioBean.enderecoSelecionado2.numero}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" 
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Tipo: *" />
+
+						<p:inputText id="tipoLogradouro2"
+							value="#{funcionarioBean.enderecoSelecionado2.tipo_logradouro}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" 
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Cidade: *" />
+
+						<p:inputText id="nomeCidade2"
+							value="#{funcionarioBean.cidadeSelecionada2.nome_cidade}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" 
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>
+						
+					<h:outputLabel value="Cep_inicial: *" />
+
+						<p:inputText id="Cep_inicial2"
+							value="#{funcionarioBean.cidadeSelecionada2.cep_inicial}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()"
+							size="50" requiredMessage="Dado inválido">
+						</p:inputText>	
+						
+<!-- 					<h:outputLabel value="Cidade: *" /> -->
+
+<!-- 						<p:inputText id="nomeCidade" -->
+<!-- 							value="#{funcionarioBean.cidadeSelecionada.nome_cidade}" -->
+<!-- 							onkeydown="this.value = this.value.toUpperCase();" -->
+<!-- 							onkeyup="this.value = this.value.toUpperCase()" required="true" -->
+<!-- 							size="50" requiredMessage="Dado inválido"> -->
+<!-- 						</p:inputText>	 -->
+						
+					<h:outputText value="Estado: " />
+						<p:selectOneMenu id="Estado2"
+							value="#{funcionarioBean.cidadeSelecionada2.estado}"
+							converter="converterEstado" >
+							
+					
+
+							<f:selectItem itemLabel="Selecione o Estado" value="#{null}" />
+							<f:selectItems value="#{funcionarioBean.listaEstado}" var="est"
+								itemValue="#{est}" itemLabel="#{est.nome_estado}" />
+
+						</p:selectOneMenu>
+						
+					
+						<h:inputHidden id="idEndereco2"
+							value="#{funcionarioBean.enderecoSelecionado2.id_endereco}" />
+							
+<!-- 						<h:inputHidden id="idCidade2" -->
+<!-- 							value="#{funcionarioBean.cidadeSelecionada2.id_cidade}" />	 -->
+						
+<!-- 						<h:inputHidden id="idEstado2" -->
+<!-- 							value="#{funcionarioBean.cidadeSelecionada2.estado.id_estado}" />	 -->
+					
+					
+
+				</p:panel>
+		
+				
+				
+				<p:commandButton value="Salvar" action="#{funcionarioBean.salvar}"
+						 icon="ui-icon-disk"  update="edicao , :lista">
+<!-- 						 <f:ajax execute="edicao"/> -->
+
+						 </p:commandButton>	 
+				
+			</h:form>
+
+			<h:form id="lista">
+				<p:dataTable id="tabela" value="#{funcionarioBean.lista}" var="funcionario"
+					rendered="#{not empty funcionarioBean.lista}" sortMode="multiple"
+					rows="10" paginator="true">
+					<f:facet name="header">Listagem de Funcionarios</f:facet>
+
+					<p:column sortBy="#{funcionario.nome_pessoa}"
+						filterBy="#{funcionario.nome_pessoa}" headerText="Nome">
+						<h:outputText value="#{funcionario.nome_pessoa}" />
+					</p:column>
+
+
+
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Editar">
+
+						<p:commandLink action="#{funcionarioBean.populaCampos}" 
+							onclick="if (!confirm('Deseja realmente Editar a Funcionario: #{funcionario.nome_pessoa} ?')) return false;" update=":edicao" >
+							<h:graphicImage library="imagens" name="editar.gif" />
+							<f:setPropertyActionListener
+								target="#{funcionarioBean.funcionarioSelecionado}" value="#{funcionario}" />
+							
+						</p:commandLink>
+					</p:column>
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Excluir">
+						<h:commandLink action="#{funcionarioBean.excluir}"
+							onclick="if (!confirm('Deseja realmente excluir a Funcionario #{funcionario.nome_pessoa}?')) return false;">
+							<h:graphicImage library="imagens" name="excluir.gif" />
+							<f:setPropertyActionListener
+								target="#{funcionarioBean.funcionarioSelecionado}" value="#{funcionario}" />
+						</h:commandLink>
+					</p:column>
+
+				</p:dataTable>
+				
+					
+				
+			
+		
+			</h:form>		
+			
+			
+						 
+					
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

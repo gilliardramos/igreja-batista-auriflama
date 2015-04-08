@@ -1,0 +1,116 @@
+package br.com.iba.estado;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "estado")
+public class Estado {
+
+
+	@Id
+	@GeneratedValue
+	@Column (name = "id_estado")
+	private Integer id_estado;
+
+
+	private  String nome_estado;
+	private String sigla_estado;
+	@Column(name="datacadastro", updatable=false)
+	private Date dataCadastro;
+	
+
+	//Cria um objeto Estado public
+	public Estado(){
+		
+	}	
+	
+	public Estado(String nome_estado, String sigla_estado) {
+		super();
+		this.nome_estado = nome_estado;
+		this.sigla_estado = sigla_estado;
+			}
+
+
+
+	public Integer getId_estado() {
+		return id_estado;
+	}
+	public void setId_estado(Integer id_estado) {
+		this.id_estado = id_estado;
+	}
+	public String getNome_estado() {
+		return nome_estado;
+	}
+	public void setNome_estado(String nome_estado) {
+		this.nome_estado = nome_estado;
+	}
+	public String getSigla_estado() {
+		return sigla_estado;
+	}
+	public void setSigla_estado(String sigla_estado) {
+		this.sigla_estado = sigla_estado;
+	}
+	
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result
+				+ ((id_estado == null) ? 0 : id_estado.hashCode());
+		result = prime * result
+				+ ((nome_estado == null) ? 0 : nome_estado.hashCode());
+		result = prime * result
+				+ ((sigla_estado == null) ? 0 : sigla_estado.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Estado other = (Estado) obj;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (id_estado == null) {
+			if (other.id_estado != null)
+				return false;
+		} else if (!id_estado.equals(other.id_estado))
+			return false;
+		if (nome_estado == null) {
+			if (other.nome_estado != null)
+				return false;
+		} else if (!nome_estado.equals(other.nome_estado))
+			return false;
+		if (sigla_estado == null) {
+			if (other.sigla_estado != null)
+				return false;
+		} else if (!sigla_estado.equals(other.sigla_estado))
+			return false;
+		return true;
+	}
+
+}
+

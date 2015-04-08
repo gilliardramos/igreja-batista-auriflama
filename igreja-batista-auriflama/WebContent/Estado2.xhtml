@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:form id="edicao">
+
+		<p:panel id="panel" header="Cadastro de Estado"
+			style="margin-bottom:10px;">
+
+			<p:messages id="messages" />
+
+			<h:panelGrid id="display" columns="2">
+				<h:outputLabel value="Nome: *" />
+				<p:inputText id="nomeEstado"
+					value="#{estadoBean.estadoSelecionado.nome_estado}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<h:outputLabel value="Sigla: *" />
+				<p:inputText id="siglaEstado" maxlength="2" size="2"
+					value="#{estadoBean.estadoSelecionado.sigla_estado}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<h:inputHidden id="idEstado"
+					value="#{estadoBean.estadoSelecionado.id_estado}" />
+			</h:panelGrid>
+
+			<p:commandButton value="Salvar" action="#{estadoBean.salvar}"
+				ajax="false" icon="ui-icon-disk" />
+
+		</p:panel>
+
+		<br />
+
+	</h:form>
+	<br />
+
+	<h:form id="listaestado">
+		<p:dataTable id="tabelaestado" value="#{estadoBean.lista}"
+			var="estado" rendered="#{not empty estadoBean.lista}"
+			sortMode="multiple" rows="10" paginator="true">
+			<f:facet name="header">Listagem de Estados</f:facet>
+
+			<p:column sortBy="#{estado.nome_estado}" headerText="Nome">
+				<h:outputText value="#{estado.nome_estado}" />
+			</p:column>
+
+			<p:column styleClass="coluna-tabela-centralizada"
+				sortBy="#{estado.sigla_estado}" headerText="Sigla">
+				<h:outputText value="#{estado.sigla_estado}" styleClass="coluna-tabela-centralizada"/>
+			</p:column>
+
+			<p:column styleClass="coluna-tabela-centralizada" headerText="Editar">
+
+				<h:commandLink
+					onclick="if (!confirm('Deseja realmente Editar o Estado: #{estado.nome_estado} ?')) return false;">
+					<h:graphicImage library="imagens" name="editar.gif" />
+					<f:setPropertyActionListener
+						target="#{estadoBean.estadoSelecionado}" value="#{estado}" />
+				</h:commandLink>
+			</p:column>
+			<p:column styleClass="coluna-tabela-centralizada"
+				headerText="Excluir">
+				<h:commandLink action="#{estadoBean.excluir}"
+					onclick="if (!confirm('Deseja realmente excluir o Estado #{estado.nome_estado}?')) return false;">
+					<h:graphicImage library="imagens" name="excluir.gif" />
+					<f:setPropertyActionListener
+						target="#{estadoBean.estadoSelecionado}" value="#{estado}" />
+				</h:commandLink>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+</h:body>
+</html>

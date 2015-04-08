@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory>
+  <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
+  <property name="hibernate.connection.password">123</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost/salao</property>
+  <property name="hibernate.connection.username">salao</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+  <property name="hibernate.hbm2ddl.auto">update</property>
+  <!-- <property name="hibernate.current_session_context_class">thread</property> -->
+  <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
+  <mapping class="com.toledo.salao.estado.Estado"/>
+  <mapping class="com.toledo.salao.cidade.Cidade"/>
+  <mapping class="com.toledo.salao.endereco.Endereco"/>
+  <mapping class="com.toledo.salao.pessoa.Pessoa"/>
+  <mapping class="com.toledo.salao.cliente.Cliente"/>
+  <mapping class="com.toledo.salao.empresa.Empresa"/>
+  <mapping class="com.toledo.salao.historico.Historico"/>
+  <mapping class="com.toledo.salao.telefone.Telefone"/>
+<!--   <mapping class="com.toledo.salao.servico.Servico"/> -->
+<!--   <mapping class="com.toledo.salao.funcao.Funcao"/> -->
+<!--   <mapping class="com.toledo.salao.funcionario.Funcionario"/> -->
+<!--   <mapping class="com.toledo.salao.agenda.Agenda"/> -->
+<!--   <mapping class="com.toledo.salao.fechamento.Fechamento"/> -->
+ </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,136 @@
+package com.toledo.salao.cliente;
+
+import java.lang.annotation.Inherited;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.IndexColumn;
+
+import com.toledo.salao.pessoa.Pessoa;
+
+@SuppressWarnings("serial")
+@Entity
+@Table(name = "cliente")
+@DiscriminatorValue("CLIENTE")
+public class Cliente extends Pessoa implements java.io.Serializable {
+
+	
+	public Cliente() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//@IndexColumn(name="id_pessoa")
+	//@GeneratedValue (strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.TABLE)
+	private Integer id_cliente;
+
+
+	private  String status_cliente;
+	
+	
+//	@ManyToOne
+//	@JoinColumn(name="cliente_titular", referencedColumnName="id_cliente")
+//	private Cliente titular;
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((id_cliente == null) ? 0 : id_cliente.hashCode());
+		result = prime * result
+				+ ((status_cliente == null) ? 0 : status_cliente.hashCode());
+//		result = prime * result + ((titular == null) ? 0 : titular.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (id_cliente == null) {
+			if (other.id_cliente != null)
+				return false;
+		} else if (!id_cliente.equals(other.id_cliente))
+			return false;
+		if (status_cliente == null) {
+			if (other.status_cliente != null)
+				return false;
+		} else if (!status_cliente.equals(other.status_cliente))
+			return false;
+//		if (titular == null) {
+//			if (other.titular != null)
+//				return false;
+//		} else if (!titular.equals(other.titular))
+//			return false;
+		return true;
+	}
+
+
+
+	public Cliente(String status_cliente, Cliente titular) {
+		super();
+		this.status_cliente = status_cliente;
+		//this.titular = titular;
+			}
+
+
+
+	public Integer getId_cliente() {
+		return id_cliente;
+	}
+
+
+
+	public void setId_cliente(Integer id_cliente) {
+		this.id_cliente = id_cliente;
+	}
+
+
+
+	public String getStatus_cliente() {
+		return status_cliente;
+	}
+
+
+
+	public void setStatus_cliente(String status_cliente) {
+		this.status_cliente = status_cliente;
+	}
+
+
+
+//	public Cliente getTitular() {
+//		return titular;
+//	}
+//
+//
+//
+//	public void setTitular(Cliente titular) {
+//		this.titular = titular;
+//	}
+
+
+
+	
+
+}

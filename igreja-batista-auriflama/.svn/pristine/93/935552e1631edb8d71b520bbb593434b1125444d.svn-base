@@ -1,0 +1,47 @@
+package com.toledo.salao.funcao;
+
+import java.util.List;
+
+import com.toledo.salao.funcao.Funcao;
+import com.toledo.salao.funcao.FuncaoDao;
+import com.toledo.salao.util.DAOFactory;
+
+public class FuncaoRN {
+
+	private FuncaoDao funcaoDao;
+
+	public FuncaoRN() {
+		this.funcaoDao = DAOFactory.criaFuncaoDao();
+	}
+
+	public void salvar(Funcao e1) {
+		this.funcaoDao.salvar(e1);
+		
+	}
+
+	public List<Funcao> listar() {
+		return this.funcaoDao.listar();
+	}
+
+	public void excluir(Funcao funcao) {
+		this.funcaoDao.excluir(funcao);
+		
+	}
+
+	public Funcao pesquisar(String string) {
+		return this.funcaoDao.pesquisar(string);
+	}
+
+	public Funcao buscarPorId(Integer id) {
+		return this.funcaoDao.buscarPorId(id);
+	}
+	
+	public void alterar(Funcao funcao) {
+	 this.funcaoDao.alterar(funcao);
+		
+	}	
+	
+	public Funcao carregar(Integer id) {
+		return this.funcaoDao.carregar(id);
+	}
+	}

@@ -1,0 +1,9 @@
+package com.toledo.salao.beleza;
+
+public class ResourceServlet {
+
+	public ResourceServlet() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

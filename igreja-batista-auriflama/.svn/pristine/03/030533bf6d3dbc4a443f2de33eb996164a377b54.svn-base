@@ -1,0 +1,49 @@
+package com.toledo.salao.telefone;
+
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+
+
+public class TelefoneRN {
+
+	private TelefoneDao telefoneDao;
+
+	public TelefoneRN() {
+		this.telefoneDao = DAOFactory.criaTelefoneDao();
+	}
+
+	public void salvar(Telefone e1) {
+		this.telefoneDao.salvar(e1);
+		
+	}
+
+	public List<Telefone> listar() {
+		return this.telefoneDao.listar();
+	}
+
+	public void excluir(Telefone telefone) {
+		this.telefoneDao.excluir(telefone);
+		
+	}
+
+	public Telefone pesquisar(String string) {
+		return this.telefoneDao.pesquisar(string);
+	}
+	
+	public List<Telefone> listarPorPessoa(Integer idPessoa) {
+		return this.telefoneDao.listarPorPessoa(idPessoa);
+	}
+
+	public void alterar(Telefone telefone) {
+	 this.telefoneDao.alterar(telefone);
+		
+	}	
+	
+	/*public Telefone carregar(Integer id) {
+		return this.telefoneDao.carregar(id);
+	}*/
+	}
+

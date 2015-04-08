@@ -1,0 +1,102 @@
+package com.toledo.salao.endereco;
+
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+@ManagedBean(name = "enderecoBean")
+@RequestScoped
+public class EnderecoBean {
+	
+	private Endereco enderecoSelecionada = new Endereco();
+	private List<Endereco> lista = null;
+	//private List<Cidade> listaCidade = null;
+	
+
+
+	public Endereco getEnderecoSelecionada() {
+		return enderecoSelecionada;
+	}
+
+	public void setEnderecoSelecionada(Endereco enderecoSelecionada) {
+		this.enderecoSelecionada = enderecoSelecionada;
+	}
+
+	public List<Endereco> getLista() {
+		EnderecoRN enderecoRN = new EnderecoRN();
+		if (lista == null) {
+			lista = enderecoRN.listar();
+
+		}
+		return lista;
+	}
+
+	public void setLista(List<Endereco> lista) {
+		this.lista = lista;
+	}
+
+	/*public List<Cidade> getListaCidade() {
+		CidadeRN cidadeRN = new CidadeRN();
+		if (listaCidade == null) {
+			listaCidade = cidadeRN.listar();
+
+		}
+		return listaCidade;
+	}
+
+	public void setListaCidade(List<Ci...Estado> listaEstado) {
+		this.listaEstado = listaEstado;
+	}*/
+	
+	public void salvar() {
+		
+		if (this.enderecoSelecionada.getId_endereco() == 0) {
+			//this.enderecoSelecionada.setDataCadastro(new Date());
+			EnderecoRN enderecoRN = new EnderecoRN();
+			enderecoRN.salvar(this.enderecoSelecionada);
+			FacesMessage faces = new FacesMessage("Endereco cadastrada com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+		//	this.listaEstado = null;
+			this.setEnderecoSelecionada(null);
+
+		} else {
+			alterar();
+		}
+	}
+	
+
+
+	public void excluir() {
+		EnderecoRN enderecoRN = new EnderecoRN();
+		enderecoRN.excluir(this.enderecoSelecionada);
+		FacesMessage faces = new FacesMessage("Endereco Excluida com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		//this.listaEstado = null;
+		this.setEnderecoSelecionada(null);
+	}
+	
+	public void alterar() {
+		//this.enderecoSelecionada.setDataCadastro(new Date());
+		EnderecoRN enderecoRN = new EnderecoRN();
+		enderecoRN.alterar(this.enderecoSelecionada);
+		FacesMessage faces = new FacesMessage("Endereco Alterada com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		//this.listaEstado = null;
+		this.setEnderecoSelecionada(null);	
+	}
+	
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,48 @@
+package com.toledo.salao.fechamento;
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+
+
+public class FechamentoRN {
+
+	private FechamentoDao fechamentoDao;
+
+	public FechamentoRN() {
+		this.fechamentoDao = DAOFactory.criaFechamentoDao();
+	}
+
+	public void salvar(Fechamento e1) {
+		this.fechamentoDao.salvar(e1);
+		
+	}
+
+	public List<Fechamento> listar() {
+		return this.fechamentoDao.listar();
+	}
+
+	public void excluir(Fechamento fechamento) {
+		this.fechamentoDao.excluir(fechamento);
+		
+	}
+
+	public Fechamento pesquisar(String string) {
+		return this.fechamentoDao.pesquisar(string);
+	}
+
+	public Fechamento buscarPorId(Integer id) {
+		return this.fechamentoDao.buscarPorId(id);
+	}
+	
+	public void alterar(Fechamento fechamento) {
+	 this.fechamentoDao.alterar(fechamento);
+		
+	}	
+	
+	public Fechamento carregar(Integer id) {
+		return this.fechamentoDao.carregar(id);
+	}
+	}
+

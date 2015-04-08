@@ -1,0 +1,49 @@
+package com.toledo.salao.servico;
+
+import java.util.List;
+
+import com.toledo.salao.util.DAOFactory;
+
+
+
+public class ServicoRN {
+
+	private ServicoDao servicoDao;
+
+	public ServicoRN() {
+		this.servicoDao = DAOFactory.criaServicoDao();
+	}
+
+	public void salvar(Servico e1) {
+		this.servicoDao.salvar(e1);
+		
+	}
+
+	public List<Servico> listar() {
+		return this.servicoDao.listar();
+	}
+
+	public void excluir(Servico servico) {
+		this.servicoDao.excluir(servico);
+		
+	}
+
+	public Servico pesquisar(String string) {
+		return this.servicoDao.pesquisar(string);
+	}
+
+	public Servico buscarPorId(Integer id) {
+		return this.servicoDao.buscarPorId(id);
+	}
+	
+	public void alterar(Servico servico) {
+	 this.servicoDao.alterar(servico);
+		
+	}	
+	
+	public Servico carregar(Integer id) {
+		return this.servicoDao.carregar(id);
+	}
+	}
+
+

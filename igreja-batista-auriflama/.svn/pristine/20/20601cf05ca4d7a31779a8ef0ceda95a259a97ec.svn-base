@@ -1,0 +1,21 @@
+package com.toledo.salao.agenda;
+
+import java.util.List;
+
+import com.toledo.salao.agenda.Agenda;
+
+public interface AgendaDao {
+
+	public void salvar(Agenda agenda);
+
+	public List<Agenda> listar();
+
+	public void excluir(Agenda agenda);
+
+	public Agenda pesquisar(String string);
+	
+	public List<Agenda> pesquisarPorPessoa(Integer idPessoa);
+
+	public void alterar(Agenda agenda);
+	
+	}

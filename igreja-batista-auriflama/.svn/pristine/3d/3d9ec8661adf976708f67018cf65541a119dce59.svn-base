@@ -1,0 +1,386 @@
+package com.toledo.salao.pessoa;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+
+
+
+
+@Entity
+@Table(name="pessoa")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "TIPO_PESSOA")
+
+
+
+public class Pessoa implements Serializable {
+	
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private Integer id_pessoa;    
+    private String nome_pessoa;
+    private String sexo;
+    private Date data_nascimento;
+    private String rg;
+    private String cpf;
+    private String email;
+    private String senha;
+    private Date ultimo_acesso;
+  
+//    @OneToMany(cascade=CascadeType.ALL)
+//    @JoinColumn(name="id_pessoa", referencedColumnName="id_pessoa")
+//	private Collection<Endereco> enderecos;
+//	
+//    @OneToMany(cascade=CascadeType.ALL)
+//    @JoinColumn(name="id_pessoa", referencedColumnName="id_pessoa")
+//   	private Collection<Telefone> telefones;
+    
+    //@OneToMany(mappedBy="pessoa", cascade = CascadeType.ALL) 
+    //  @JoinColumn(referencedColumnName="id_cliente")
+    // targetEntity = Endereco.class,
+
+ //  private Set<Endereco> enderecos = new HashSet<Endereco>();
+       
+   // @OneToMany(cascade = CascadeType.ALL)
+   // @JoinTable ( name =" PES_END ",
+   //  joinColumns = @JoinColumn ( name =" PES_ID "),
+  //   inverseJoinColumns = @JoinColumn ( name =" END_ID ", insertable=true, updatable=true, nullable=true))
+     //private Collection < Endereco > enderecos ;
+   // @OneToMany(cascade=CascadeType.ALL)
+   //private Set<Endereco> enderecos = new HashSet<Endereco>(0);
+    
+
+
+   
+		public Pessoa(String nome_pessoa, String sexo, Date data_nascimento, String rg, String cpf, String email, String senha, Date ultimo_acesso) {
+		super();
+			this.nome_pessoa = nome_pessoa;
+			this.sexo = sexo;
+			this.data_nascimento = data_nascimento;
+			this.rg = rg;
+			this.cpf = cpf;
+			this.email = email;
+			this.senha = senha;
+			this.ultimo_acesso = ultimo_acesso;
+			//this.enderecos = enderecos;
+			//this.telefones = telefones;
+	}
+
+
+
+
+	
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result
+				+ ((data_nascimento == null) ? 0 : data_nascimento.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result
+				+ ((id_pessoa == null) ? 0 : id_pessoa.hashCode());
+		result = prime * result
+				+ ((nome_pessoa == null) ? 0 : nome_pessoa.hashCode());
+		result = prime * result + ((rg == null) ? 0 : rg.hashCode());
+		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
+		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
+		result = prime * result
+				+ ((ultimo_acesso == null) ? 0 : ultimo_acesso.hashCode());
+		return result;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pessoa other = (Pessoa) obj;
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
+			return false;
+		if (data_nascimento == null) {
+			if (other.data_nascimento != null)
+				return false;
+		} else if (!data_nascimento.equals(other.data_nascimento))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id_pessoa == null) {
+			if (other.id_pessoa != null)
+				return false;
+		} else if (!id_pessoa.equals(other.id_pessoa))
+			return false;
+		if (nome_pessoa == null) {
+			if (other.nome_pessoa != null)
+				return false;
+		} else if (!nome_pessoa.equals(other.nome_pessoa))
+			return false;
+		if (rg == null) {
+			if (other.rg != null)
+				return false;
+		} else if (!rg.equals(other.rg))
+			return false;
+		if (senha == null) {
+			if (other.senha != null)
+				return false;
+		} else if (!senha.equals(other.senha))
+			return false;
+		if (sexo == null) {
+			if (other.sexo != null)
+				return false;
+		} else if (!sexo.equals(other.sexo))
+			return false;
+		if (ultimo_acesso == null) {
+			if (other.ultimo_acesso != null)
+				return false;
+		} else if (!ultimo_acesso.equals(other.ultimo_acesso))
+			return false;
+		return true;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public Pessoa() {
+		
+	}
+
+//	 @OneToMany
+//	 @JoinColumn(name="END_ID")
+//	 public Set<Endereco> getEnderecos() { return enderecos; }
+//	 void setEnderecos(Set enderecos) { this.enderecos = enderecos; }
+
+
+	public Integer getId_pessoa() {
+		return id_pessoa;
+	}
+
+
+
+
+	public void setId_pessoa(Integer id_pessoa) {
+		this.id_pessoa = id_pessoa;
+	}
+
+
+
+
+	public String getNome_pessoa() {
+		return nome_pessoa;
+	}
+
+
+
+
+	public void setNome_pessoa(String nome_pessoa) {
+		this.nome_pessoa = nome_pessoa;
+	}
+
+
+
+
+	public String getSexo() {
+		return sexo;
+	}
+
+
+
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+
+
+
+	public Date getData_nascimento() {
+		return data_nascimento;
+	}
+
+
+
+
+	public void setData_nascimento(Date data_nascimento) {
+		this.data_nascimento = data_nascimento;
+	}
+
+
+
+
+	public String getRg() {
+		return rg;
+	}
+
+
+
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+
+
+
+	public String getCpf() {
+		return cpf;
+	}
+
+
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+
+
+
+	public Date getUltimo_acesso() {
+		return ultimo_acesso;
+	}
+
+
+
+
+	public void setUltimo_acesso(Date ultimo_acesso) {
+		this.ultimo_acesso = ultimo_acesso;
+	}
+
+
+
+
+	
+
+
+
+}

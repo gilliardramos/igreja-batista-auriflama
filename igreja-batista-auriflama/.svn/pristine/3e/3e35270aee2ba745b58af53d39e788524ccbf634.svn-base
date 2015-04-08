@@ -1,0 +1,22 @@
+package com.toledo.salao.pessoa;
+
+import java.util.List;
+
+public interface PessoaDao {
+
+	public void salvar(Pessoa pessoa);
+
+	public List<Pessoa> listar();
+
+	public void excluir(Pessoa pessoa);
+
+	public Pessoa pesquisar(String string);
+
+	public void alterar(Pessoa pessoa);
+
+	public Pessoa buscarPorId(Integer integer);
+	
+	public Pessoa carregar(Integer idPessoa);
+
+
+}

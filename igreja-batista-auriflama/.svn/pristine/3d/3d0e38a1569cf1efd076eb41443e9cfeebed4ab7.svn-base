@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="pageTitle">Agendamento</ui:define>
+		<ui:define name="pageHeader"></ui:define>
+		<ui:define name="body">
+		
+
+
+			<h:form id="edicao">
+
+				<p:panel id="panel" header="Agenda"
+					style="margin-bottom:10px;">
+
+					<p:messages id="messages" />
+
+					<h:panelGrid id="display" columns="2">
+
+												
+						<h:outputLabel value="Data de Agendamento: *" />
+
+						<p:calendar id="dataAgenda" pattern="dd/MM/yyyy"
+							locale="pt_BR" size="14" maxlength="50"
+							value="#{agendaBean.agendaSelecionada.data_agenda}"
+							navigator="true">
+						</p:calendar>
+
+						<h:outputScript name="calendario_pt_BR.js" library="js" />
+						<br />
+						
+						
+						<h:outputLabel value="Hora Inicial: *" />
+
+						<p:inputText id="horaInicialAgenda"
+							value="#{agendaBean.agendaSelecionada.hora_inicial}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado Inválido">
+						</p:inputText>
+						
+						<h:outputLabel value="Hora Final: *" />
+
+						<p:inputText id="horaFinalAgenda"
+							value="#{agendaBean.agendaSelecionada.hora_final}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado Inválido">
+						</p:inputText>
+						
+						<h:outputLabel value="Valor: *" />
+
+						<p:inputText id="valorAgenda"
+							value="#{agendaBean.agendaSelecionada.valor_cobrado}"
+							onkeydown="this.value = this.value.toUpperCase();"
+							onkeyup="this.value = this.value.toUpperCase()" required="true"
+							size="50" requiredMessage="Dado Inválido">
+						</p:inputText>
+						
+						<h:outputText value="Serviço: " />
+						<p:selectOneMenu id="servico"
+							value="#{agendaBean.agendaSelecionada.servico}"
+							converter="converterServico" required="true" requiredMessage="Dado inválido">>
+							
+							<f:ajax listener="#{agendaBean.listarFuncPorServico()}" render="funcionario" />
+
+							<f:selectItem itemLabel="Selecione o Serviço" value="#{null}" />
+							<f:selectItems value="#{servicoBean.lista}" var="serv"
+								itemValue="#{serv}" itemLabel="#{serv.nome_servico}" />
+
+						</p:selectOneMenu>
+						
+						
+						<h:outputText id="idoutFunc" value="Funcionário por serviço: " rendered="#{not empty agendaBean.agendaSelecionada.servico}"/>
+						<p:selectOneMenu id="funcionario" rendered="#{not empty agendaBean.agendaSelecionada.servico}"
+							value="#{agendaBean.agendaSelecionada.funcionario}"
+							 required="true" requiredMessage="Dado inválido">
+
+							<f:selectItem itemLabel="Selecione o Funcionário" value="#{null}" />
+							<f:selectItems value="#{agendaBean.listaFuncionario}" var="func"
+								itemValue="#{func}" itemLabel="#{func.nome_pessoa}" />
+
+						</p:selectOneMenu>
+						
+						<h:inputHidden id="idCliente"
+							value="#{clienteBean.clienteSelecionado.id_pessoa}" />
+							
+						<h:inputHidden id="idFuncionario"
+							value="#{funcionarioBean.funcionarioSelecionado.id_pessoa}" />	
+
+					</h:panelGrid>
+
+					
+
+				</p:panel>
+				<br />				
+				
+				<p:commandButton value="Salvar" action="#{clienteBean.salvar}"
+						 icon="ui-icon-disk"  update="edicao , :lista">
+<!-- 						 <f:ajax execute="edicao"/> -->
+
+						 </p:commandButton>	 
+				
+			</h:form>
+
+			<h:form id="lista">
+				<p:dataTable id="tabela" value="#{agendaBean.lista}" var="agenda"
+					rendered="#{not empty agendaBean.lista}" sortMode="multiple"
+					rows="10" paginator="true">
+					<f:facet name="header">Listagem de Agendamentos</f:facet>
+
+					<p:column sortBy="#{agenda.cliente.nome_pessoa}"
+						filterBy="#{agenda.cliente.nome_pessoa}" headerText="Nome">
+						<h:outputText value="#{agenda.cliente.nome_pessoa}" />
+					</p:column>
+					
+					<p:column sortBy="#{agenda.servico.nome_servico}"
+						filterBy="#{agenda.servico.nome_servico}" headerText="Serviço">
+						<h:outputText value="#{agenda.servico.nome_servico}" />
+					</p:column>
+
+
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Editar">
+
+						<p:commandLink 
+							onclick="if (!confirm('Deseja realmente Editar o Agendamento: #{agenda.id_agenda} ?')) return false;" update=":edicao" >
+							<h:graphicImage library="imagens" name="editar.gif" />
+							<f:setPropertyActionListener
+								target="#{agendaBean.agendaSelecionada}" value="#{agenda}" />
+							
+						</p:commandLink>
+					</p:column>
+					<p:column styleClass="coluna-tabela-centralizada"
+						headerText="Excluir">
+						<h:commandLink action="#{agendaBean.excluir}"
+							onclick="if (!confirm('Deseja realmente excluir o Agendamento #{agenda.id_agenda}?')) return false;">
+							<h:graphicImage library="imagens" name="excluir.gif" />
+							<f:setPropertyActionListener
+								target="#{agendaBean.agendaSelecionada}" value="#{agenda}" />
+						</h:commandLink>
+					</p:column>
+
+				</p:dataTable>
+				
+					
+				
+			
+		
+			</h:form>		
+			
+			
+						 
+					
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

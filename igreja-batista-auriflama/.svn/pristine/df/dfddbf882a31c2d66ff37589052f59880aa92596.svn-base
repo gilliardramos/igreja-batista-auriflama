@@ -1,0 +1,105 @@
+package com.toledo.salao.funcionario;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.toledo.salao.pessoa.Pessoa;
+import com.toledo.salao.funcao.Funcao;
+
+@SuppressWarnings("serial")
+@Entity
+@Table(name = "funcionario")
+//@ PrimaryKeyJoinColumn (name = "id_pessoa")
+@DiscriminatorValue("FUNCIONARIO")
+public class Funcionario extends Pessoa implements java.io.Serializable {
+	
+	public Funcionario() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	@GeneratedValue
+	private Integer id_funcionario;
+	private  String nivel;
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((funcao == null) ? 0 : funcao.hashCode());
+		result = prime * result
+				+ ((id_funcionario == null) ? 0 : id_funcionario.hashCode());
+		result = prime * result + ((nivel == null) ? 0 : nivel.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcionario other = (Funcionario) obj;
+		if (funcao == null) {
+			if (other.funcao != null)
+				return false;
+		} else if (!funcao.equals(other.funcao))
+			return false;
+		if (id_funcionario == null) {
+			if (other.id_funcionario != null)
+				return false;
+		} else if (!id_funcionario.equals(other.id_funcionario))
+			return false;
+		if (nivel == null) {
+			if (other.nivel != null)
+				return false;
+		} else if (!nivel.equals(other.nivel))
+			return false;
+		return true;
+	}
+
+
+	@ManyToOne
+	@JoinColumn(name="id_funcao", nullable=false)
+	private Funcao funcao;
+	
+	public Funcionario(String nivel, Funcao funcao ) {
+		super();
+		this.nivel = nivel;
+		this.funcao = funcao;
+		
+			}
+	
+	public Funcao getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(Funcao funcao) {
+		this.funcao = funcao;
+	}
+
+	public Integer getId_funcionario() {
+		return id_funcionario;
+	}
+	
+	public void setId_funcionario(Integer id_funcionario) {
+		this.id_funcionario = id_funcionario;
+	}
+	
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
+
+}

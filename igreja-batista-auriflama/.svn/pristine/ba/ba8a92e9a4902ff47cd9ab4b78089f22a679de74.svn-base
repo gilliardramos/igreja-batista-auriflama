@@ -1,0 +1,44 @@
+package com.toledo.salao.historico;
+
+import java.util.List;
+
+import com.toledo.salao.historico.Historico;
+import com.toledo.salao.historico.HistoricoDao;
+import com.toledo.salao.util.DAOFactory;
+
+public class HistoricoRN {
+
+	private HistoricoDao historicoDao;
+
+	public HistoricoRN() {
+		this.historicoDao = DAOFactory.criaHistoricoDao();
+	}
+
+	public void salvar(Historico e1) {
+		this.historicoDao.salvar(e1);
+		
+	}
+
+	public List<Historico> listar() {
+		return this.historicoDao.listar();
+	}
+
+	public void excluir(Historico historico) {
+		this.historicoDao.excluir(historico);
+		
+	}
+
+	public Historico pesquisar(String string) {
+		return this.historicoDao.pesquisar(string);
+	}
+
+
+	public void alterar(Historico historico) {
+	 this.historicoDao.alterar(historico);
+		
+	}	
+	
+	public Historico carregar(Integer id) {
+		return this.historicoDao.carregar(id);
+	}
+	}

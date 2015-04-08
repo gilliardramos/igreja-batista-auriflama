@@ -1,0 +1,73 @@
+package com.toledo.salao.empresa;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+@ManagedBean(name = "empresaBean")
+@RequestScoped
+public class EmpresaBean {
+
+	private Empresa empresaSelecionada = new Empresa();
+	private List<Empresa> lista = null;
+
+	public void salvar() {
+		if (this.empresaSelecionada.getId() == 0) {
+			EmpresaRN empresaRN = new EmpresaRN();
+			empresaSelecionada.setDt_cadastro(new Date());
+			empresaRN.salvar(empresaSelecionada);
+			FacesMessage faces = new FacesMessage(
+					"Empresa cadastrada com sucesso!");
+			FacesContext contexto = FacesContext.getCurrentInstance();
+			contexto.addMessage(null, faces);
+			this.lista = null;
+			this.setEmpresaSelecionada(null);
+			
+		} else {
+			alterar();
+		}
+	}
+
+	public Empresa getEmpresaSelecionada() {
+		return empresaSelecionada;
+	}
+
+	public void setEmpresaSelecionada(Empresa empresaSelecionada) {
+		this.empresaSelecionada = empresaSelecionada;
+	}
+
+	public List<Empresa> getLista() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		if (lista == null) {
+			lista = empresaRN.listar();
+
+		}
+		return lista;
+	}
+
+	public void excluir() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		empresaRN.excluir(this.empresaSelecionada);
+		FacesMessage faces = new FacesMessage("Empresa Excluida com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setEmpresaSelecionada(null);
+	}
+
+	public void alterar() {
+		System.out.println("Entrei para Alterar");
+		System.out.println(this.empresaSelecionada.getFantasia());
+		EmpresaRN empresaRN = new EmpresaRN();
+		empresaRN.alterar(this.empresaSelecionada);
+		FacesMessage faces = new FacesMessage("Empresa Alterada com sucesso!");
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		contexto.addMessage(null, faces);
+		this.lista = null;
+		this.setEmpresaSelecionada(null);
+	}
+}

@@ -1,0 +1,148 @@
+package com.toledo.salao.pessoa;
+
+
+
+
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+
+
+
+public class PessoaDaoHibernate implements PessoaDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Pessoa pessoa) {
+		this.sessao.save(pessoa);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pessoa> listar() {
+		Criteria lista = sessao.createCriteria(Pessoa.class);
+		return lista.list();
+	}
+
+	@Override
+	public void excluir(Pessoa pessoa) {
+		this.sessao.delete(pessoa);
+
+	}
+
+	/*@Override
+	public Pessoa pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from pessoa e where e.nome_pessoa like :nome_pessoa");
+		consultaNome.setString("nome_pessoa", "%" + string + "%");
+		return (Pessoa) consultaNome.uniqueResult();
+	}
+*/
+	@Override
+	public void alterar(Pessoa pessoa) {
+		this.sessao.update(pessoa);
+	}
+	
+	/*@Override
+	public Pessoa buscarPorId(Integer id) {
+		  if (id == null) {  
+	            return null;  
+	        } else {  
+	            sessao = this.getSessao();  
+	            Pessoa pessoa = ( Pessoa )  
+	            sessao.get( PessoaDao.class, id );  
+	            sessao.getTransaction().commit();  
+	            sessao.close();  
+	            return pessoa;  
+	        }  
+	}*/
+
+
+	@Override
+	public Pessoa buscarPorId(Integer id) {
+		Query consultaId = this.sessao
+				.createQuery("from Pessoa as e where e.id_pessoa = :id_pessoa");
+		consultaId.setInteger("id_pessoa", id);
+		return (Pessoa) consultaId.uniqueResult();
+	}
+	
+	
+/*	@Override
+	public Pessoa buscarPorId(Integer id) {
+		
+		System.out.print("dentro do dao hibernate  "+id);
+		Query query = sessao.createQuery("from Pessoa where id_pessoa = :id_pessoa ");
+		query.setParameter("id_pessoa", id);
+		List<Pessoa> list = query.list();
+		System.out.print("dentro do dao hibernate e na lista  "+list.get(0).toString());
+		//return list;
+		Pessoa pessoa = new Pessoa();
+		return pessoa;
+
+	}*/
+	
+	@Override
+	public Pessoa pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from Pessoa c where c.id_pessoa like :id_Pessoa");
+		consultaNome.setString("id_pessoa", "%" + string + "%");
+		return (Pessoa) consultaNome.uniqueResult();
+	}
+	
+	/*@SuppressWarnings("unchecked")
+	@Override
+	public Pessoa buscar(Integer idPessoa) {
+		List<Cidade> cidades = new ArrayList<>();		
+		try {
+			// o carreto seria abrir a sessão aqui, usar abaixo e então fechar em finally
+			
+			
+			
+			
+			 * Exemplo de Criteria para obter a cidade ja com o objeto esta a que pertence, 
+			 * mas trazendo somente a cidade do id_cidade = 123, ou o que vc's passar por parametro
+			 
+			pessoas = (ArrayList<Pessoa>)sessao.createCriteria(Pessoa.class)
+					.add(Restrictions.eq("id_pessoa", idPessoa))
+					.list();
+			
+			
+			
+		} catch (Exception e) {
+			System.err.println(String.format("ocorreu um erro ao lista as cidades cadastradas. Erro: %s", e.getMessage()));
+		} finally {
+			// o correto aqui é fechar a sessão
+		}
+		
+		//return cidades.get(0);
+		Pessoa pessoa = new Pessoa();
+		pessoa = pessoas.get(0);
+		return pessoa;
+	}
+*/
+	
+	@Override  
+	   public Pessoa carregar(Integer pessoa) {  
+	      // return (Pessoa) this.sessao.get(Pessoa.class, pessoa);
+		String string = Integer.toString(pessoa);
+		Query consultaNome = this.sessao
+				.createQuery("from Pessoa c where c.id_pessoa like :id_pessoa");
+		consultaNome.setString("id_pessoa", "%" + string + "%");
+		return (Pessoa) consultaNome.uniqueResult();
+	   }  
+
+}

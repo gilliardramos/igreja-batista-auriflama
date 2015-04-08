@@ -1,0 +1,74 @@
+package com.toledo.salao.empresa;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import com.toledo.salao.estado.Estado;
+
+public class EmpresaDaoHibernate implements EmpresaDao {
+	
+	private Session sessao;
+	
+	@Override
+	public void salvar(Empresa empresa) {
+		this.sessao.save(empresa);
+
+	}
+
+	public Session getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(Session sessao) {
+		this.sessao = sessao;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Empresa> listar() {
+		Criteria lista = sessao.createCriteria(Empresa.class);
+		return lista.list();
+	}
+
+	@Override
+	public void excluir(Empresa empresa) {
+		this.sessao.delete(empresa);
+
+	}
+
+
+	@Override
+	public void alterar(Empresa empresa) {
+		this.sessao.update(empresa);
+	}
+	
+	@Override
+	public Empresa buscarPorId(Integer id) {
+		Query consultaId = this.sessao
+				.createQuery("from Empresa as e where e.id = :id");
+		consultaId.setInteger("id", id);
+		return (Empresa) consultaId.uniqueResult();
+	}
+		
+	@Override
+	public Empresa pesquisar(String string) {
+		Query consultaNome = this.sessao
+				.createQuery("from Empresa c where c.id like :id");
+		consultaNome.setString("id", "%" + string + "%");
+		return (Empresa) consultaNome.uniqueResult();
+	}
+	
+	
+	@Override  
+	   public Empresa carregar(Integer empresa) {  
+	  	String string = Integer.toString(empresa);
+		Query consultaNome = this.sessao
+				.createQuery("from Empresa c where c.id like :id");
+		consultaNome.setString("id", "%" + string + "%");
+		return (Empresa) consultaNome.uniqueResult();
+	   }  
+
+}

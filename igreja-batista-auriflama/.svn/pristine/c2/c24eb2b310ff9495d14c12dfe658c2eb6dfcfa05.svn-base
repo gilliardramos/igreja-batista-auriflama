@@ -1,0 +1,23 @@
+package com.toledo.salao.empresa;
+
+import java.util.List;
+
+
+
+public interface EmpresaDao {
+	
+	public void salvar(Empresa empresa);
+
+	public List<Empresa> listar();
+
+	public void excluir(Empresa empresa);
+
+	public Empresa pesquisar(String string);
+
+	public void alterar(Empresa empresa);
+
+	public Empresa carregar(Integer idEmpresa);
+
+	public Empresa buscarPorId(Integer integer);
+
+}
