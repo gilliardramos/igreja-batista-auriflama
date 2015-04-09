@@ -14,7 +14,6 @@ public class EstadoRN {
 
 	public void salvar(Estado e1) {
 		this.estadoDao.salvar(e1);
-
 	}
 
 	public List<Estado> listar() {
@@ -23,7 +22,6 @@ public class EstadoRN {
 
 	public void excluir(Estado estado) {
 		this.estadoDao.excluir(estado);
-
 	}
 
 	public Estado pesquisar(String string) {
@@ -36,7 +34,6 @@ public class EstadoRN {
 
 	public void alterar(Estado estado) {
 		this.estadoDao.alterar(estado);
-
 	}
 
 	public Estado carregar(Integer id) {

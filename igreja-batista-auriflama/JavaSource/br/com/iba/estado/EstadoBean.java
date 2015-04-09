@@ -47,17 +47,6 @@ public class EstadoBean {
 		return lista;
 	}
 
-	/*public Estado buscarPorId() {
-		EstadoRN estadoRN = new EstadoRN();
-		if (this.estadoSelecionado.getId_estado() == null) {
-			return null;
-		}else{
-			
-		estadoRN.buscarPorId(this.estadoSelecionado.getId_estado());
-
-		return estadoBuscado;
-	}
-	}*/
 	public void excluir() {
 		EstadoRN estadoRN = new EstadoRN();
 		estadoRN.excluir(this.estadoSelecionado);
