@@ -13,9 +13,9 @@ public interface CidadeDao {
 	public Cidade pesquisar(String string);
 
 	public void alterar(Cidade cidade);
-	
+
 	public Cidade carregar(Integer idCidade);
-	
+
 	public List<Cidade> listarCidadePorEstado(Integer estado);
 
 }
