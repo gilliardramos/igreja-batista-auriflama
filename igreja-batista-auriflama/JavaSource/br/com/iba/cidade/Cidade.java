@@ -14,19 +14,67 @@ import javax.persistence.Table;
 import br.com.iba.estado.Estado;
 
 @Entity
-@Table(name="cidade")
+@Table(name = "cidade")
 public class Cidade {
-	
-	
+
+	@Id
+	@GeneratedValue
+	private Integer id_cidade;
+	private String nome_cidade;
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "id_estado")
+	private Estado estado;
+	@Column(name = "data_cadastro", updatable = false)
+	private Date datacadastro;
+
+	public Cidade() {
+
+	}
+
+	public Cidade(String nome_cidade, Estado estado, String cep_inicial) {
+		super();
+		this.nome_cidade = nome_cidade;
+		this.estado = estado;
+	}
+
+	public Date getDataCadastro() {
+		return datacadastro;
+	}
+
+	public void setDataCadastro(Date datacadastro) {
+		this.datacadastro = datacadastro;
+	}
+
+	public Integer getId_cidade() {
+		return id_cidade;
+	}
+
+	public void setId_cidade(Integer id_cidade) {
+		this.id_cidade = id_cidade;
+	}
+
+	public String getNome_cidade() {
+		return nome_cidade;
+	}
+
+	public void setNome_cidade(String nome_cidade) {
+		this.nome_cidade = nome_cidade;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((cep_inicial == null) ? 0 : cep_inicial.hashCode());
-		result = prime * result
-				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+				+ ((datacadastro == null) ? 0 : datacadastro.hashCode());
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result
 				+ ((id_cidade == null) ? 0 : id_cidade.hashCode());
@@ -44,15 +92,10 @@ public class Cidade {
 		if (getClass() != obj.getClass())
 			return false;
 		Cidade other = (Cidade) obj;
-		if (cep_inicial == null) {
-			if (other.cep_inicial != null)
+		if (datacadastro == null) {
+			if (other.datacadastro != null)
 				return false;
-		} else if (!cep_inicial.equals(other.cep_inicial))
-			return false;
-		if (dataCadastro == null) {
-			if (other.dataCadastro != null)
-				return false;
-		} else if (!dataCadastro.equals(other.dataCadastro))
+		} else if (!datacadastro.equals(other.datacadastro))
 			return false;
 		if (estado == null) {
 			if (other.estado != null)
@@ -72,74 +115,4 @@ public class Cidade {
 		return true;
 	}
 
-	@Id
-	@GeneratedValue
-	private Integer id_cidade;
-	
-	private String nome_cidade;	
-	
-	
-	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	@JoinColumn(name ="id_estado")
-	private Estado estado;	
-	
-	
-	private String cep_inicial;
-	
-	@Column(name="datacadastro", updatable=false)
-	private Date dataCadastro;
-	
-	public Date getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-
-	public Cidade(){
-		
-	}	
-	
-	public Cidade(String nome_cidade, Estado estado, String cep_inicial ) {
-		super();
-		this.nome_cidade = nome_cidade;
-		this.estado = estado;
-		this.cep_inicial = cep_inicial;
-	}
-
-	public Integer getId_cidade() {
-		return id_cidade;
-	}
-
-	public void setId_cidade(Integer id_cidade) {
-		this.id_cidade = id_cidade;
-	}
-
-	public String getNome_cidade() {
-		return nome_cidade;
-	}
-
-	public void setNome_cidade(String nome_cidade) {
-		this.nome_cidade = nome_cidade;
-	}
-
-	
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-	public String getCep_inicial() {
-		return cep_inicial;
-	}
-
-	public void setCep_inicial(String cep_inicial) {
-		this.cep_inicial = cep_inicial;
-	}
-
 }
-

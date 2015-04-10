@@ -30,23 +30,6 @@ public class EstadoBean {
 		}
 	}
 
-	public Estado getEstadoSelecionado() {
-		return estadoSelecionado;
-	}
-
-	public void setEstadoSelecionado(Estado estadoSelecionado) {
-		this.estadoSelecionado = estadoSelecionado;
-	}
-
-	public List<Estado> getLista() {
-		EstadoRN estadoRN = new EstadoRN();
-		if (lista == null) {
-			lista = estadoRN.listar();
-
-		}
-		return lista;
-	}
-
 	public void excluir() {
 		EstadoRN estadoRN = new EstadoRN();
 		estadoRN.excluir(this.estadoSelecionado);
@@ -66,4 +49,22 @@ public class EstadoBean {
 		this.lista = null;
 		this.setEstadoSelecionado(null);
 	}
+
+	public List<Estado> getLista() {
+		EstadoRN estadoRN = new EstadoRN();
+		if (lista == null) {
+			lista = estadoRN.listar();
+
+		}
+		return lista;
+	}
+
+	public Estado getEstadoSelecionado() {
+		return estadoSelecionado;
+	}
+
+	public void setEstadoSelecionado(Estado estadoSelecionado) {
+		this.estadoSelecionado = estadoSelecionado;
+	}
+
 }

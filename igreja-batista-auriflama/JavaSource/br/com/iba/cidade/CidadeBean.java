@@ -125,24 +125,9 @@ public class CidadeBean {
 	
 	
 	public void listarCidadePorEstado(){
-		
-		//this.setListaCidadePorEstado(this.estadoSelecionado.getId_estado());
-		
-//		System.out.println(this.estadoSelecionado.getId_estado());
-//		if (this.estadoSelecionado.getId_estado().equals(0)){
-//			this.setListaCidadePorEstado(null);
-//		}else{
-//		
+
 		CidadeRN cidadeRN = new CidadeRN();
 		this.setListaCidadePorEstado(cidadeRN.listarCidadePorEstado(this.estadoSelecionado.getId_estado()));
-		
-		//System.out.println("numero 1 da lista; "+this.listaCidadePorEstado.get(0).getNome_cidade());
-
-		//this.setListaCidadePorEstado(cidadeRN.listarCidadePorEstado(this.estadoSelecionado.getId_estado()));
-		//System.out.println("numero 1 da lista; "+this.listaCidadePorEstado.get(0).getNome_cidade());
-		//	System.out.println(this.cidadeSelecionada.getEstado().getNome_estado());
-		//System.out.println("numero 2 da lista; "+this.listaFuncionarioPorServico.get(1).getNome_pessoa());
-		//System.out.println(this.estadoSelecionado.getNome_estado());
 		
 		}
 	}
