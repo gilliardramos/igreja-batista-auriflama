@@ -7,19 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 
 @Entity
 @Table(name = "estado")
 public class Estado {
 
 	@Id
-	@NotNull
 	@GeneratedValue
 	private Integer id_estado;
 	private String nome_estado;
-	@NotNull
 	private String sigla_estado;
 	@Column(updatable = false)
 	private Date data_cadastro;
