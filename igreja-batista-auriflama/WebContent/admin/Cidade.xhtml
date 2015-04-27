@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<h:form id="edicao">
+		<p:panel id="panel" header="Cadastro de Cidade"
+			style="margin-bottom:10px;">
+			<p:growl id="messages" />
+			<h:panelGrid id="display" columns="2">
+				<h:outputLabel value="Nome: *" />
+				<p:inputText id="nomeCidade" size="40"
+					value="#{cidadeBean.cidadeSelecionada.nome_cidade}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<h:outputText value="Estado: " />
+				<p:selectOneMenu id="idEstado"
+					value="#{cidadeBean.cidadeSelecionada.estado}"
+					converter="converterEstado">
+					<f:selectItem itemLabel="Selecione o Estado" value="#{null}" />
+					<f:selectItems value="#{cidadeBean.listaEstado}" var="est"
+						itemValue="#{est}" itemLabel="#{est.nome_estado}" />
+				</p:selectOneMenu>
+				<h:inputHidden id="idCidade"
+					value="#{cidadeBean.cidadeSelecionada.id_cidade}" />
+			</h:panelGrid>
+			<p:commandButton value="Salvar" action="#{cidadeBean.salvar}"
+				ajax="false" icon="ui-icon-disk" />
+		</p:panel>
+		<br />
+	</h:form>
+	<br />
+	<h:form id="lista">
+		<p:dataTable id="tabela" value="#{cidadeBean.lista}" var="cidade"
+			rendered="#{not empty cidadeBean.lista}" sortMode="multiple"
+			rows="10" paginator="true">
+			<f:facet name="header">Listagem de Cidades</f:facet>
+			<p:column sortBy="#{cidade.nome_cidade}"
+				filterBy="#{cidade.nome_cidade}" headerText="Nome">
+				<h:outputText value="#{cidade.nome_cidade}" />
+			</p:column>
+			<p:column styleClass="coluna-tabela-centralizada"
+				sortBy="#{cidade.estado.sigla_estado}" headerText="Estado">
+				<h:outputText value="#{cidade.estado.sigla_estado}" />
+			</p:column>
+			<p:column styleClass="coluna-tabela-centralizada" headerText="Editar">
+				<h:commandLink
+					onclick="if (!confirm('Deseja realmente Editar a Cidade: #{cidade.nome_cidade} ?')) return false;">
+					<h:graphicImage library="imagens" name="editar.gif" />
+					<f:setPropertyActionListener
+						target="#{cidadeBean.cidadeSelecionada}" value="#{cidade}" />
+				</h:commandLink>
+			</p:column>
+			<p:column styleClass="coluna-tabela-centralizada"
+				headerText="Excluir">
+				<h:commandLink action="#{cidadeBean.excluir}"
+					onclick="if (!confirm('Deseja realmente excluir a Cidade #{cidade.nome_cidade}?')) return false;">
+					<h:graphicImage library="imagens" name="excluir.gif" />
+					<f:setPropertyActionListener
+						target="#{cidadeBean.cidadeSelecionada}" value="#{cidade}" />
+				</h:commandLink>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+</h:body>
+</html>
+

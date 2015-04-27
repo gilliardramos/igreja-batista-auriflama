@@ -27,8 +27,8 @@ public class ConexaoHibernateFilter  implements Filter{
 		try {
 			this.sf.getCurrentSession().beginTransaction(); //criei a conexao e iniciei a transacao
 			chain.doFilter(servletFilter, servletResponse); // enviei e fiz o filtro
-			this.sf.getCurrentSession().getTransaction().commit(); //MAndei a transacao
-			this.sf.getCurrentSession().close();
+			this.sf.getCurrentSession().getTransaction().commit(); //MAndei a transacao e comitei
+			this.sf.getCurrentSession().close(); //Fecho
 		} catch (Throwable ex) {
 			// ManoDeu problema em cima verifica se estiver ativa tenta dar um rollback e joga a excessao
 			//na Exception

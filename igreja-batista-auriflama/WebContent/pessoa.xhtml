@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<h:form id="cadastro">
+		<p:panel id="panel" header="Cadastro de Pessoa"
+			style="margin-bottom:10px;">
+
+			<p:growl id="messages" />
+
+			<h:panelGrid id="display" columns="2">
+
+				<h:outputLabel value="Nome: *" for="nome" />
+
+				<p:inputText id="nome" label="Nome"
+					value="#{pessoaBean.pessoa.nome_pessoa}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true"
+					size="30" requiredMessage="Você não tem nome?">
+					<f:validateLength minimum="10" maximum="30" />
+				</p:inputText>
+
+				<h:outputLabel value="Sexo: *" />
+
+				<p:selectOneRadio id="sexo" value="#{pessoaBean.pessoa.sexo}">
+					<f:selectItem itemLabel="Feminino" itemValue="F" />
+					<f:selectItem itemLabel="Masculino" itemValue="M" />
+					<f:selectItem itemLabel="Outros" itemValue="O" />
+				</p:selectOneRadio>
+
+				<h:outputLabel value="Data de Nascimento: *" />
+				<p:calendar id="nascimentoCliente" pattern="dd/MM/yyyy"
+					locale="pt_BR" size="14" maxlength="50"
+					value="#{pessoaBean.pessoa.data_nascimento}" navigator="true"
+					required="true" requiredMessage="Digite sua Data de Nascimento!">
+				</p:calendar>
+				<h:outputScript name="calendario_pt_BR.js" library="js" />
+
+				<br />
+
+				<h:outputLabel value="RG: *" />
+				<p:inputText id="rg" value="#{pessoaBean.pessoa.rg}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true"
+					size="14" requiredMessage="Digite seu RG!">
+				</p:inputText>
+
+				<h:outputLabel value="CPF: *" />
+				<p:inputMask id="cpf" size="14" mask="999.999.999-99"
+					requiredMessage="Digite seu CPF!" value="#{pessoaBean.pessoa.cpf}"
+					required="true" validatorMessage=" *CPF inválido"
+					converter="CpfConverter">
+					<!-- <f:validator validatorId="cpf" /> -->
+				</p:inputMask>
+
+				<h:outputLabel value="Email: *" />
+				<p:inputText id="email" value="#{pessoaBean.pessoa.email}" size="30"
+					maxlength="30" onkeydown="this.value = this.value.toLowerCase();"
+					onkeyup="this.value = this.value.toLowerCase()" required="true"
+					requiredMessage="Digite um E-mail!"
+					validatorMessage=" *E-mail inválido">
+					<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
+				</p:inputText>
+
+				<h:outputLabel value="Senha: *" />
+
+				<p:password id="senha1" value="#{pessoaBean.pessoa.senha}"
+					match="senha2" label="Senha 1" required="true" redisplay="true"
+					feedback="true" promptLabel="Digite uma senha segura"
+					goodLabel="Boa" weakLabel="Razoável" strongLabel="Excelente"
+					validatorMessage="Senha diferente da confirmação!">
+					<p:watermark for="senha1" value="Digite sua senha" />
+				</p:password>
+
+				<h:outputLabel value="Confirme sua senha: *" />
+				<p:password id="senha2" value="#{pessoaBean.pessoa.senha}"
+					label="Password 2" required="true" redisplay="true">
+					<p:watermark for="senha2" value="Confirme sua senha" />
+				</p:password>
+
+				<h:outputLabel value="Tipo: *" />
+				<p:inputText id="tipoLogradouro"
+					value="#{pessoaBean.pessoa.tipo_logradouro}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true"
+					size="10" requiredMessage="Digite o Tipo do Logradouro!">
+				</p:inputText>
+
+				<h:outputLabel value="Logradouro: *" />
+				<p:inputText id="logradouro" value="#{pessoaBean.pessoa.logradouro}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true"
+					size="50"
+					requiredMessage="Digite o nome da sua Rua, Avenida ou etc..!">
+				</p:inputText>
+
+				<h:outputLabel value="Número: *" />
+				<p:inputText id="numero" value="#{pessoaBean.pessoa.numero}"
+					required="true" size="10"
+					requiredMessage="Digite o numero da casa!">
+				</p:inputText>
+
+				<h:outputLabel value="Complemento: " />
+				<p:inputText id="complemento"
+					value="#{pessoaBean.pessoa.complemento}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="false"
+					size="20">
+				</p:inputText>
+
+				<h:outputLabel value="Bairro: *" />
+				<p:inputText id="bairro" value="#{pessoaBean.pessoa.bairro}"
+					onkeydown="this.value = this.value.toUpperCase();"
+					onkeyup="this.value = this.value.toUpperCase()" required="true"
+					size="30" requiredMessage="Digite o nome do seu bairro!">
+				</p:inputText>
+
+				<h:outputLabel value="Cep: *" />
+				<p:inputMask id="cep" size="8" mask="99.999-999"
+					requiredMessage="Digite o seu CEP!"
+					value="#{pessoaBean.pessoa.cep}" required="true">
+				</p:inputMask>
+
+				<h:outputLabel value="Telefone Residencial: *" />
+				<p:inputMask id="fone" size="10" mask="(99)9999-9999"
+					requiredMessage="Digite seu Telefone!"
+					value="#{pessoaBean.pessoa.telefone}" required="true">
+				</p:inputMask>
+
+				<h:outputText value="Estado: " />
+				<p:selectOneMenu id="Estado"
+					value="#{pessoaBean.idEstadoSelecionado}" required="true"
+					requiredMessage="Selecione um Estado">
+					<f:ajax render="Cidade" process="@form"
+						listener="#{pessoaBean.listarCidadePorEstado}"
+						execute="idoutCidade" />
+					<f:selectItem itemLabel="Selecione o Estado" value="#{null}" />
+					<f:selectItems value="#{cidadeBean.listaEstado}" var="est"
+						itemValue="#{est.id_estado}" itemLabel="#{est.nome_estado}" />
+				</p:selectOneMenu>
+
+				<h:outputText id="idoutCidade" value="Cidade: " />
+				<p:selectOneMenu id="Cidade" value="#{pessoaBean.pessoa.cidade}"
+					converter="converterCidade" required="true"
+					requiredMessage="Selecione a Cidade!">
+					<f:selectItem itemLabel="Selecione a Cidade" itemValue="#{null}" />
+					<f:selectItems value="#{pessoaBean.listaCidadePorEstado}"
+						var="cidade" itemValue="#{cidade}"
+						itemLabel="#{cidade.nome_cidade}" />
+				</p:selectOneMenu>
+
+
+				<h:inputHidden id="idPessoa" value="#{pessoaBean.pessoa.id_pessoa}" />
+				<h:inputHidden id="ativo" value="#{pessoaBean.pessoa.ativo}" />
+				<h:inputHidden id="destino" value="#{pessoaBean.destinoSalvar}" />
+
+			</h:panelGrid>
+		</p:panel>
+
+		<p:commandButton value="Salvar" action="#{pessoaBean.salvar}"
+			icon="ui-icon-disk">
+		</p:commandButton>
+
+	</h:form>
+
+</h:body>
+</html>
+
