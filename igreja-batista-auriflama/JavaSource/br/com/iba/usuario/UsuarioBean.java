@@ -1,10 +1,11 @@
 package br.com.iba.usuario;
 
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import java.util.List;
 
 @ManagedBean(name = "usuarioBean")
 @RequestScoped
@@ -69,6 +70,17 @@ public class UsuarioBean {
 			this.lista = usuarioRN.listar();
 		}
 		return this.lista;
+	}
+
+	public String atribuiPermissao(Usuario usuario, String permissao) {
+		this.usuario = usuario;
+		java.util.Set<String> permissoes = this.usuario.getPermissao();
+		if (permissoes.contains(permissao)) {
+			permissoes.remove(permissao);
+		} else {
+			permissoes.add(permissao);
+		}
+		return null;
 	}
 
 	public Usuario getUsuario() {

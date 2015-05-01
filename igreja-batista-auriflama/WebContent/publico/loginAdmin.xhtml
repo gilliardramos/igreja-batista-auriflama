@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+<title>Area Restrita</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon" />
+
+<style type="text/css">
+<!--
+body {
+	background-color: #eeeeee;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-size : 100%;
+	border : 0;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 13px;
+	overflow-x:hidden; /* retira barra de rolagem horizontal */
+	overflow-y:hidden; /* retira barra de rolagem vertical */
+}
+
+.inputTextStyle {
+    background-color: transparent !important;
+    border:none; 
+    box-shadow:none;
+}
+
+.login {
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-280px;
+    margin-left:-300px;
+    color:#FFF;
+    font-weight:370;
+}
+-->
+</style>
+</h:head>
+
+<h:body>
+	<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+	<p:dialog modal="true" widgetVar="statusDialog" header="Carregando..." draggable="false" closable="false" resizable="false" position="top" >
+	    <center><h:graphicImage value="imagens/ajax-loader.gif"/></center>  
+	</p:dialog>
+	<h:form id="formPrincipal">
+		  <table width="602" border="0" align="center" cellpadding="0" cellspacing="0" id="Tabela_01" class="login">
+			 <tr>
+			 	<td align="center"><img src="imagens/logo.png" alt=""/></td>
+			 </tr>	
+			 <tr>
+				<td height="370" colspan="2" background="imagens/formLogin.jpg" valign="top">
+					
+					
+				<table width="602" border="0" cellpadding="2" cellspacing="3">
+				  <tr>
+				    <td colspan="2">&nbsp;</td>
+				    <td height="100" colspan="2">&nbsp;</td>
+			      </tr>
+				  <tr>
+				    <td width="93" align="left">&nbsp;</td>
+				    <td width="27" align="left"><img src="imagens/loginUsuario.jpg" width="16" height="16"  alt=""/></td>
+				    <td width="358" height="30" valign="middle" bgcolor="#eeeeee"><p:inputText id="usuario" required="true" size="30" styleClass="inputTextStyle" value="#{loginAdminMB.usuario}"/></td>
+				    <td width="124">&nbsp;</td>
+			      </tr>
+				  <tr>
+				    <td colspan="2">&nbsp;</td>
+				    <td height="30" colspan="2">&nbsp;</td>
+			      </tr>
+				  <tr>
+				    <td>&nbsp;</td>
+				    <td><img src="imagens/formChave.jpg" width="16" height="16"  alt=""/></td>
+				    <td height="30" valign="middle" bgcolor="#eeeeee"><p:password id="senha" required="true" size="30" styleClass="inputTextStyle" value="#{loginAdminMB.senha}" /></td>
+				    <td>&nbsp;</td>
+			      </tr>
+				  <tr>
+				    <td colspan="2">&nbsp;</td>
+				    <td height="15" colspan="2">&nbsp;</td>
+			      </tr>
+				  <tr>
+				    <td colspan="2">&nbsp;</td>
+				    <td colspan="2">
+                         <p:commandButton action="#{loginAdminMB.login}" update=":growl" value="Logar"/>
+                    </td>
+			      </tr>
+				  </table>
+                </td>
+		  	</tr>
+		</table>
+	</h:form>
+	<p:growl id="growl"/>
+</h:body>
+</html>
