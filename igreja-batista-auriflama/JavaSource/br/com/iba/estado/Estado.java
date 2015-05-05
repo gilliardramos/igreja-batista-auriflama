@@ -24,10 +24,12 @@ public class Estado {
 
 	}
 
-	public Estado(String nome_estado, String sigla_estado) {
+	public Estado(String nome_estado, String sigla_estado, Date data_cadastro) {
 		super();
+		
 		this.nome_estado = nome_estado;
 		this.sigla_estado = sigla_estado;
+		this.data_cadastro = data_cadastro;
 	}
 
 	public Integer getId_estado() {

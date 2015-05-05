@@ -51,8 +51,8 @@ public class EstadoDaoHibernate implements EstadoDao {
 	@Override
 	public Estado pesquisar(String string) {
 		Query consultaNome = this.sessao
-				.createQuery("from Estado c where c.id_estado like :id_Estado");
-		consultaNome.setString("id_estado", "%" + string + "%");
+				.createQuery("from Estado c where c.nome_estado like :estado");
+		consultaNome.setString("estado", "%" + string + "%");
 		return (Estado) consultaNome.uniqueResult();
 	}
 
